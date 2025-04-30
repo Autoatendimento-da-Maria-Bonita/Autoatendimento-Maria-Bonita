@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../imagens/MariaBonita.png" type="image/x-icon">
+    <link rel="stylesheet" href="estilo_compras.css">
+    <title>Maria Bonita</title>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="navbar__go-back" onclick="window.location.href='../tela_inicial/tela_inicial.html'; sessionStorage.clear();">
+                <img class="navbar__go-back__icon" src="../../imagens/Icons/voltar.svg" alt="Icone de voltar">
+                <div class="navbar__go-back__text">Voltar</div>
+            </div>
+            <div class="navbar__img">
+                <img class="header-menu__icon" src="../../imagens/MariaBonita.png" alt="Logo Maria Bonita">
+            </div>
+        </div>
+    </header>
+    <main>
+        <p id="debug"></p>
+        <section>
+            <div class="header-menu">
+                <div class="header-menu__text">Confira Nossos Produtos</div>
+            </div>
+            <div class="categoria">
+                <h3>Comidas</h3>
+                <div id="comidas-container"></div>
+            </div>
+            <div class="categoria">
+                <h3>Bebidas</h3>
+                <div id="bebidas-container"></div>
+            </div>
+            <div class="categoria">
+                <h3>Doces</h3>
+                <div id="doces-container"></div>
+            </div>
+            <!-- <div class="categoria">
+                <h3>Combos</h3>
+            </div> -->
+        </section>
+    </main>
+    <footer>
+        <div class="botoes">
+            <button class="cancelar-pedido" onclick="cancelarPedido()">Cancelar pedido</button>
+            <a href="../pagamento/tela_pagamento.html">
+                <button class="finalizar-pedido">Finalizar pedido</button>
+            </a>
+        </div>
+        <p>&copy; 2024 Maria Bonita</p>
+    </footer>
+    <script src="tratar_produtos.js"></script>
+</body>
+</html>

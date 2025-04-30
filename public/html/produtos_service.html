@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de Produto</title>
+    <link rel="stylesheet" href="../css/produtos_service.css" />
+</head>
+
+<body>
+    <div class="container">
+        <img src="../img/MariaBonita.png" alt="Logo Maria Bonita" class="logo" />
+        <h1>Cadastro de Produto</h1>
+
+        <form id="product-form">
+            <input type="text" name="nome" placeholder="Nome do Produto" required />
+            <input type="number" name="preco" placeholder="Preço (R$)" required step="0.01" />
+
+            <!-- Coloque o select antes do input de imagem -->
+            <select name="categoria" id="categoria" required>
+                <option value="Comidas" selected>Comidas</option>
+                <option value="Bebidas">Bebidas</option>
+                <option value="Doces">Doces</option>
+            </select>
+
+            <!-- imagem depois -->
+            <input type="file" name="imagem" accept="image/*" required />
+
+            <input type="number" name="Quantidade_em_estoque" placeholder="Quantidade em Estoque" required />
+            <button type="submit">Cadastrar Produto</button>
+            <p id="mensagem"></p>
+        </form>
+
+        <a href="index.html" class="voltar">Voltar ao painel</a>
+    </div>
+    <script type="module" src="../js/produtos_service.js"></script>
+</body>
+</html>

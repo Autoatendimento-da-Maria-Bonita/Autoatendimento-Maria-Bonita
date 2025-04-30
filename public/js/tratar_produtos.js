@@ -1,16 +1,38 @@
 window.onload = function() {
-    loadProducts('comidas');
-    loadProducts('bebidas');
-    loadProducts('doces');
-    loadProducts('combos');
-    updateFinalizeButton(); // Atualiza o botão ao carregar a página
-    updateTotal(); // Atualiza o valor total ao carregar a página
+    loadProducts('Comidas');
+    loadProducts('Bebidas');
+    loadProducts('Doces');
+    loadProducts('Combos');
+    updateFinalizeButton();
+    updateTotal();
 };
 
 async function loadProducts(type) {
-    const response = await fetch(`../html/produtos/${type}.html`);
-    const text = await response.text();
-    document.getElementById(`${type}-container`).innerHTML = text;
+    try {
+        const response = await fetch(`/api/produtos/${type}`);
+        const produtos = await response.json();
+
+        const container = document.getElementById(`${type}-container`);
+        container.innerHTML = '';
+
+        produtos.forEach(produto => {
+            const div = document.createElement('div');
+            div.className = 'produto';
+            div.setAttribute('onclick', 'incrementClick(this)');
+            div.setAttribute('data-name', produto.nome);
+            div.setAttribute('data-price', produto.preco);
+
+            div.innerHTML = `
+                <img src="${produto.imagem_url}" alt="${produto.nome}">
+                <div class="click-counter" style="display:none;">0</div>
+                <p class="nome-produto">${produto.nome}</p>
+                <p class="preco-produto">R$ ${Number(produto.preco).toFixed(2).replace('.', ',')}</p>
+            `;
+            container.appendChild(div);
+        });
+    } catch (err) {
+        console.error('Erro ao carregar produtos:', err);
+    }
 }
 
 function incrementClick(product) {
