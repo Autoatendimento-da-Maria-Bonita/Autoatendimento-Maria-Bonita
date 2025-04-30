@@ -1,0 +1,104 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo global */
+body {
+  font-family: 'Verdana', sans-serif;
+  background-color: #f4f4f4;
+  color: #111;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+header {
+  padding: 2rem 1rem;
+}
+
+.logo {
+  width: clamp(80px, 10vw, 120px);
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #666;
+}
+
+.kpi-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.kpi {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  min-width: 200px;
+  max-width: 280px;
+  flex: 1 1 220px;
+}
+
+.kpi h2 {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+.kpi p {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #2c2c2c;
+}
+
+.actions {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  border: none;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.confirm {
+  background-color: #27ae60;
+  color: #fff;
+}
+
+.button:hover {
+  filter: brightness(1.1);
+}
+
+footer {
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  color: #555;
+}

@@ -1,0 +1,206 @@
+body, html {
+    overflow: auto;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+
+header {
+    background-color: #f8d7da;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 0 0 50px 50px;
+    position: sticky;
+    z-index: 10;
+}
+
+header .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.navbar__go-back {
+    gap: 6px;
+    display: flex;
+    cursor: pointer;
+    align-self: center;
+    flex-direction: row;
+}
+
+.navbar__go-back__icon {
+    width: 32px;
+    height: auto;
+}
+
+.navbar__go-back__text {
+    align-self: center;
+    font-size: 24px;
+}
+
+.navbar__img {
+    position: relative;
+    display: inline-block;
+}
+
+.navbar__img__irresistivel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+    white-space: nowrap;
+}
+
+.navbar__img__tapioca {
+    position: relative;
+    z-index: 2;
+    width: 200px;
+}
+
+
+header .title {
+    flex: 1;
+    text-align: center;
+}
+
+header img {
+    width: 150px;
+}
+
+main {
+    background-color: #fff;
+    padding: 20px;
+    align-content: center;
+    /* Adiciona padding extra na parte inferior para compensar o footer fixo */
+    overflow-y: auto;
+    /* Define altura mínima para garantir espaço para conteúdo */
+    min-height: calc(100vh - 200px);
+}
+
+h2 {
+    text-align: center;
+}
+
+.categoria {
+    margin: 10px 1px 1px 1px;
+}
+
+.categoria h3 {
+    color: black;
+    padding: 5px;
+    margin: 0 5px 0;
+}
+
+.produtos {
+    display: flex;
+    overflow-x: auto;
+    padding: 0;
+}
+
+.produto {
+    padding: 10px ;
+    display: inline-block;
+    border-radius: 15px;
+    margin-right: 10px;
+    text-align: center;
+    position: relative;
+    
+    width: 120px;
+}
+
+.produto img {
+    border-radius: 10px;
+    box-shadow: 2px 2px 6px;
+    width: 90px;
+    height: 90px;
+}
+
+.produto .nome-produto {
+    margin: 9px 0 0;
+}
+
+.produto .preco-produto {
+    color: green;
+    margin: 5px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    color: black;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: #dbdbdb;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 32px 32px 0 0;
+    box-sizing: border-box;
+    left: 0;
+  }
+  
+
+footer .botoes button {
+    padding: 15px 30px;
+    margin: 20px;
+    font-size: 20px;
+    color: black;
+}
+
+footer .cancelar-pedido {
+    background-color: #ff4545;
+    border-radius: 15px;
+}
+
+footer .finalizar-pedido {
+    background-color: #60ff60;
+    border-radius: 15px;
+}
+
+.click-counter {
+    position: absolute;
+    top: 0;
+    right: 15%;
+    background-color: green;
+    color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+
+.header-menu {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    justify-content: center;
+    margin: 10px 0px 50px 0px;
+}
+
+.header-menu__icon {
+    width: 96px;
+    height: auto;
+}
+
+.header-menu__text {
+    font-weight: bold;
+    font-size: 32px;
+    align-self: center;
+}
