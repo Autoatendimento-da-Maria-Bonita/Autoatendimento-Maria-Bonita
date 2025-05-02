@@ -46,15 +46,10 @@ async function loadProducts(type) {
                 <p class="product__price">R$ ${Number(produto.preco).toFixed(2).replace('.', ',')}</p>
                 <div class="product__actions">
                     <button class="product__action product__action--remove" onclick="event.stopPropagation(); decrementProduct(this.closest('.product'))">
-                        <svg xmlns="http
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
+                        <span>-</span>
                     </button>
                     <button class="product__action product__action--add" onclick="event.stopPropagation(); incrementProduct(this.closest('.product'))">
-                        <svg xmlns="http
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
+                        <span>+</span>
                     </button>
                 </div>
             `;
