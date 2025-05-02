@@ -31,27 +31,25 @@
             </div>
             <div class="payment-methods">
                 <h2>Métodos de pagamento</h2>
-                <p>Nosso sistema aceita as seguintes formas de pagamento:</p>
+                <p>Este sistema aceita as seguintes formas de pagamento:</p>
                 <div class="payment-icons">
                     <img src="../img/pix.png" alt="Pix">
-                    <img src="../img/debito.jpeg" alt="Visa">
-                    <img src="../img/dinheiro.jpeg" alt="Dinheiro">
+                    <img src="../img/cartoes.png" alt="Visa">
+                    <img src="../img/dinheiro.png" alt="Dinheiro">
                 </div>
+            </div>
+            <div class="botoes">
+                <form id="payment-form" action="processar_pagamento.php" method="POST">
+                    <input type="hidden" name="cart" id="cart_input">
+                    <button id="pay-btn" onclick="EnviarAoBanco()" class="finalizar-pedido">Finalizar pedido</button>
+                </form>
+                <a href="/tela_inicial.html" onclick="sessionStorage.clear()">
+                    <button id="cancel-btn"class="cancelar-pedido">Cancelar pedido</button>
+                </a>
             </div>
         </div>
     </main>
-    <footer>
-        <div class="botoes">
-            <a href="/tela_inicial.html" onclick="sessionStorage.clear()">
-                <button id="cancel-btn"class="cancelar-pedido">Cancelar pedido</button>
-            </a>
-            <form id="payment-form" action="processar_pagamento.php" method="POST">
-                <input type="hidden" name="cart" id="cart_input">
-                <button id="pay-btn" onclick="EnviarAoBanco()" class="finalizar-pedido">Finalizar pedido</button>
-            </form>
-        </div>
-        <p>&copy; 2024 Maria Bonita</p>
-    </footer>
+    <footer><p>&copy; 2025 Maria Bonita</p></footer>
     <script src="../js/script_pagamento.js"></script>
 </body>
 </html>

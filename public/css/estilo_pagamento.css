@@ -1,5 +1,5 @@
 html, body {
-    font-size: 20px;
+    font-size: 18px;
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
 }
@@ -12,10 +12,10 @@ main {
 
 .product-list {
     margin: 20px;
-    padding: 10px;
-    border-radius: 5px;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
+    padding: 10px 30px;
+    border-radius: 12px;
 }
 
 .product-item, .header {
@@ -44,12 +44,15 @@ main {
 
 .payment-container {
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
     display: flex;
     flex-direction: column;
     height: 100%;
+    padding: 15px;
+    margin: auto;
+    margin-top: 3%;
+    max-width: 1000px;
 }
 
 .remove-btn {
@@ -67,11 +70,12 @@ main {
 
 .payment-methods {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .payment-methods h2 {
     margin-bottom: 10px;
+    font-size: 25px;
 }
 
 .payment-icons img {
@@ -83,31 +87,41 @@ main {
 
 footer {
     text-align: center;
-    padding: 10px;
-    color: black;
+    color: gray;
 }
 
-footer .botoes button {
-    padding: 15px 30px;
+main .botoes {
+    text-align: center;
+}
+
+main .botoes button {
+    padding: 15px 60px;
     margin: 10px 20px;
     font-size: 20px;
 }
 
 #cancel-btn {
     background-color: #ff4d4d;
-    border-radius: 15px;
     cursor: pointer;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    margin-top: 5px;
 }
 
 #pay-btn {
     background-color: #ccc;
-    border-radius: 15px;
+    color: #1010104D;
     cursor: not-allowed;
+    border: none;
+    border-radius: 25px;
 }
 
 #pay-btn.enabled {
     background-color: #60ff60;
     cursor: pointer;
+    border: none;
+    border-radius: 25px;
 }
 
 footer p{
