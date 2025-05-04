@@ -6,6 +6,7 @@ window.onload = function() {
     updateFinalizeButton();
     updateTotal();
     displayUserName();
+    setupPopups();
 };
 
 function displayUserName() {
@@ -13,6 +14,61 @@ function displayUserName() {
     if (userName) {
         document.getElementById('user-name').textContent = userName;
     }
+}
+
+function setupPopups() {
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        const cart = JSON.parse(sessionStorage.getItem('cart')) || {};
+        if (Object.keys(cart).length > 0) {
+            showPopup('cancelPopupOverlay');
+        } else {
+            return;
+        }
+    });
+    
+    document.getElementById('backButton').addEventListener('click', function() {
+        const cart = JSON.parse(sessionStorage.getItem('cart')) || {};
+        if (Object.keys(cart).length > 0) {
+            showPopup('backPopupOverlay');
+        } else {
+            window.location.href = '/tela_inicial.html';
+        }
+    });
+    
+    document.querySelectorAll('.popup-close, .popup-button--secondary').forEach(button => {
+        button.addEventListener('click', function() {
+            const popupId = this.getAttribute('data-popup');
+            hidePopup(popupId);
+        });
+    });
+
+    document.getElementById('confirmCancel').addEventListener('click', function() {
+        cancelarPedido();
+        hidePopup('cancelPopupOverlay');
+    });
+    
+    document.getElementById('confirmBack').addEventListener('click', function() {
+        sessionStorage.removeItem('cart');
+        window.location.href = '/tela_inicial.html';
+    });
+    
+    document.querySelectorAll('.popup-overlay').forEach(overlay => {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                hidePopup(this.id);
+            }
+        });
+    });
+}
+
+function showPopup(popupId) {
+    document.getElementById(popupId).classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function hidePopup(popupId) {
+    document.getElementById(popupId).classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 async function loadProducts(type) {
@@ -58,7 +114,6 @@ async function loadProducts(type) {
     } catch (err) {
         console.error('Erro ao carregar produtos:', err);
         
-    
         const container = document.getElementById(`${type}-container`);
         container.innerHTML = `<div class="product__error">Erro ao carregar produtos. Verifique a conexão.</div>`;
     }
