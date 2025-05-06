@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
           sessionStorage.setItem("userName", nameInput.value.trim())
           localStorage.setItem("userName", nameInput.value.trim())
-          window.location.href = "/tela_compras.html"
+          window.location.href = "/tela_compras"
       }
   })
 
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
       
       //Redirect para pagina que ainda nao existe
       showCustomAlert("Logout realizado com sucesso!")
-      window.location.href = "../index.html" 
+      window.location.href = "../index" 
     } else {
       showCustomAlert("Senha incorreta. Por favor, tente novamente.")
     }

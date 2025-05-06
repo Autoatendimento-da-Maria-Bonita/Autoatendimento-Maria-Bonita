@@ -84,7 +84,7 @@ loginForm.addEventListener("submit", async (e) => {
     showNotification("Login realizado com sucesso! Redirecionando...", "success")
 
     setTimeout(() => {
-      window.location.href = "index.html"
+      window.location.href = "index"
     }, 1500)
   } catch (error) {
     showNotification("Erro ao fazer login: ")
@@ -99,7 +99,7 @@ recuperarForm.addEventListener("submit", async (e) => {
 
   try {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + "/reset-password.html",
+      redirectTo: window.location.origin + "/reset-password",
     })
 
     if (error) throw error

@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //Redirect para pagina que ainda nao existe
 
         showCustomAlert("Logout realizado com sucesso!")
-        window.location.href = "../index.html" 
+        window.location.href = "../index" 
       } else {
         showCustomAlert("Senha incorreta. Por favor, tente novamente.")
       }

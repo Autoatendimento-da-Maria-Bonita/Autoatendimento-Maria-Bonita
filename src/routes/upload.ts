@@ -6,7 +6,7 @@ import fs from "fs";
 const uploadRouter: Router = Router();
 
 // Diretório base onde as imagens serão armazenadas
-const baseImagePath = path.join(__dirname, "../../public/img");
+const baseImagePath = path.join(__dirname, "../../public/imagens");
 
 // Cria diretório base se não existir
 if (!fs.existsSync(baseImagePath)) {

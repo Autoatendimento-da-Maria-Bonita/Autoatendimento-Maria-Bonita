@@ -31,7 +31,7 @@ function setupPopups() {
         if (Object.keys(cart).length > 0) {
             showPopup('backPopupOverlay');
         } else {
-            window.location.href = '/tela_inicial.html';
+            window.location.href = '/tela_inicial';
         }
     });
     
@@ -49,7 +49,7 @@ function setupPopups() {
     
     document.getElementById('confirmBack').addEventListener('click', function() {
         sessionStorage.removeItem('cart');
-        window.location.href = '/tela_inicial.html';
+        window.location.href = '/tela_inicial';
     });
     
     document.querySelectorAll('.popup-overlay').forEach(overlay => {
