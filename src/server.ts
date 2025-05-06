@@ -19,24 +19,28 @@ app.get('/', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../public/html/login.html'));
 });
 
-app.get('/index.html', (req: Request, res: Response) => {
+app.get('/index', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../public/html/index.html'));
 });
 
-app.get('/tela_inicial.html', (req: Request, res: Response) => {
+app.get('/tela_inicial', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../public/html/tela_inicial.html'));
 });
 
-app.get('/tela_compras.html', (req: Request, res: Response) => {
+app.get('/tela_compras', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../public/html/tela_compras.html'));
 });
 
-app.get('/tela_pagamento.html', (req: Request, res: Response) => {
+app.get('/tela_pagamento', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../public/html/tela_pagamento.html'));
 });
 
-app.get('/produtos_service.html', (req: Request, res: Response) => {
+app.get('/produtos_service', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../public/html/produtos_service.html'));
+});
+
+app.get('/gerenciamento_produtos', (req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, '../public/html/gerenciamento_produtos.html'));
 });
 
 app.listen(port, () => {

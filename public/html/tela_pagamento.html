@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maria Bonita - Tela de Pagamento</title>
-    <link rel="shortcut icon" href="../img/MariaBonita.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../imagens/MariaBonita.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/estilo_pagamento.css">
     <link rel="icon" href="../../imagens/MariaBonita.png" type="image/png">
 </head>
@@ -34,9 +34,9 @@
                 <h2>Métodos de pagamento</h2>
                 <p>Este sistema aceita as seguintes formas de pagamento:</p>
                 <div class="payment-icons">
-                    <img src="../img/pix.png" alt="Pix">
-                    <img src="../img/cartoes.png" alt="Visa">
-                    <img src="../img/dinheiro.png" alt="Dinheiro">
+                    <img src="../imagens/pix.png" alt="Pix">
+                    <img src="../imagens/cartoes.png" alt="Visa">
+                    <img src="../imagens/dinheiro.png" alt="Dinheiro">
                 </div>
             </div>
             <div class="botoes">
@@ -44,7 +44,7 @@
                     <input type="hidden" name="cart" id="cart_input">
                     <button id="pay-btn" onclick="EnviarAoBanco()" class="finalizar-pedido">Finalizar pedido</button>
                 </form>
-                <a href="/tela_inicial.html" onclick="sessionStorage.clear()">
+                <a href="/tela_inicial" onclick="sessionStorage.clear()">
                     <button id="cancel-btn"class="cancelar-pedido">Cancelar pedido</button>
                 </a>
             </div>
