@@ -1,3 +1,4 @@
+document.getElementById('payment-form').addEventListener('submit', EnviarAoBanco);
 document.addEventListener('DOMContentLoaded', () => {
     const productList = document.querySelector('.product-list');
 
@@ -54,15 +55,40 @@ function enviarAoBanco(){
     const cart = sessionStorage.getItem('cart');
     document.getElementById("cart_input").value = cart;
 }
+async function EnviarAoBanco(event) {
+    event.preventDefault(); // Impede o submit tradicional
 
-function EnviarAoBanco() {
-    event.preventDefault(); // Evita envio automático do formulário
+    const cart = JSON.parse(sessionStorage.getItem('cart'));
 
-    // Simula envio de pagamento (substitua por lógica real se necessário)
-    setTimeout(() => {
-        mostrarPopupAvaliacao();
-    }, 500); // Espera meio segundo
+    try {
+        const response = await fetch('http://localhost:3000/pagamento/criar-preferencia', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ cart }),
+        });
+
+        const data = await response.json();
+
+        if (data.id) {
+            // Redireciona para o checkout do Mercado Pago
+            const mp = new MercadoPago('SEU_PUBLIC_KEY'); 
+            mp.checkout({
+                preference: {
+                    id: data.id
+                },
+                autoOpen: true,
+            });
+        } else {
+            alert('Erro ao criar preferência de pagamento');
+        }
+    } catch (error) {
+        console.error(error);
+        alert('Erro ao processar pagamento');
+    }
 }
+
 
 function mostrarPopupAvaliacao() {
     const popup = document.getElementById("avaliacao-popup");

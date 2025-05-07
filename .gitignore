@@ -1,8 +1,0 @@
-# Ignorar a pasta config dentro de src
-/src/config/
-
-# Ignorar o arquivo supabase.ts na raiz do projeto
-supabase.ts
-
-# Ignorar o arquivo .env na raiz do projeto
-.env

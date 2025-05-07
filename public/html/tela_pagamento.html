@@ -40,10 +40,7 @@
                 </div>
             </div>
             <div class="botoes">
-                <form id="payment-form" action="processar_pagamento.php" method="POST">
-                    <input type="hidden" name="cart" id="cart_input">
-                    <button id="pay-btn" onclick="EnviarAoBanco()" class="finalizar-pedido">Finalizar pedido</button>
-                </form>
+                <button id="pay-btn" class="finalizar-pedido">Finalizar pedido</button>
                 <a href="/tela_inicial" onclick="sessionStorage.clear()">
                     <button id="cancel-btn"class="cancelar-pedido">Cancelar pedido</button>
                 </a>
@@ -52,5 +49,6 @@
     </main>
     <footer><p>&copy; 2025 Maria Bonita</p></footer>
     <script src="../js/script_pagamento.js"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
 </body>
 </html>
