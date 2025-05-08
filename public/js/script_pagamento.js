@@ -1,4 +1,5 @@
 document.getElementById('payment-form').addEventListener('submit', EnviarAoBanco);
+
 document.addEventListener('DOMContentLoaded', () => {
     const productList = document.querySelector('.product-list');
 
@@ -29,8 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
         item.innerHTML = `
             <span class="product-name">${productName}</span>
             <span class="product-quantity">${quantity}</span>
-            <span class="product-price">R$ ${price.toFixed(2)}</span>
-            <span class="product-subtotal">R$ ${subtotal.toFixed(2)}</span>
+            <span class="product-price">R$ ${price.toFixed(2).replace('.', ',')}</span>
+            <span class="product-subtotal">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
         `;
         productList.appendChild(item);
     }
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cria e exibe o total
     const totalDiv = document.createElement('div');
     totalDiv.className = 'total';
-    totalDiv.innerHTML = `<strong>Total: R$ ${total.toFixed(2)}</strong>`;
+    totalDiv.innerHTML = `<strong>Total: R$ ${total.toFixed(2).replace('.', ',')}</strong>`;
     productList.appendChild(totalDiv);
 
     // Gerencia o botão de pagamento
@@ -51,10 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-function enviarAoBanco(){
-    const cart = sessionStorage.getItem('cart');
-    document.getElementById("cart_input").value = cart;
-}
 async function EnviarAoBanco(event) {
     event.preventDefault(); // Impede o submit tradicional
 
@@ -73,7 +70,7 @@ async function EnviarAoBanco(event) {
 
         if (data.id) {
             // Redireciona para o checkout do Mercado Pago
-            const mp = new MercadoPago('SEU_PUBLIC_KEY'); 
+            const mp = new MercadoPago('TEST-a8f02ffe-cfad-4293-ae54-18adfc1c0159'); 
             mp.checkout({
                 preference: {
                     id: data.id
@@ -88,7 +85,6 @@ async function EnviarAoBanco(event) {
         alert('Erro ao processar pagamento');
     }
 }
-
 
 function mostrarPopupAvaliacao() {
     const popup = document.getElementById("avaliacao-popup");
@@ -129,3 +125,41 @@ function selecionarEstrelas(n) {
         }
     });
 }
+
+// Adiciona o evento de clique ao botão de pagamento
+document.getElementById('pay-btn').addEventListener('click', async function(event) {
+    event.preventDefault();
+    const cart = JSON.parse(sessionStorage.getItem('cart'));
+    if (!cart || Object.keys(cart).length === 0) {
+        alert("Carrinho vazio ou inválido.");
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:3000/pagamento/criar-preferencia', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ cart }),
+        });
+
+        const data = await response.json();
+
+        if (data.id) {
+            // Redireciona para o checkout do Mercado Pago
+            const mp = new MercadoPago('TEST-a8f02ffe-cfad-4293-ae54-18adfc1c0159'); 
+            mp.checkout({
+                preference: {
+                    id: data.id
+                },
+                autoOpen: true,
+            });
+        } else {
+            alert('Erro ao criar preferência de pagamento');
+        }
+    } catch (error) {
+        console.error(error);
+        alert('Erro ao processar pagamento');
+    }
+});

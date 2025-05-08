@@ -24,11 +24,12 @@
         <div class="payment-container">
             <div class="product-list">
                 <div class="header">
-                    <span>&ThickSpace;Produto</span>    
+                    <span>Produto</span>    
                     <span>Quantidade</span>
                     <span>Valor</span>
                     <span>Subtotal</span>
                 </div>
+                <!-- Os produtos serão inseridos aqui via JavaScript -->
             </div>
             <div class="payment-methods">
                 <h2>Métodos de pagamento</h2>
@@ -40,9 +41,11 @@
                 </div>
             </div>
             <div class="botoes">
-                <button id="pay-btn" class="finalizar-pedido">Finalizar pedido</button>
+                <form id="payment-form">
+                    <button id="pay-btn" class="finalizar-pedido">Finalizar pedido</button>
+                </form>
                 <a href="/tela_inicial" onclick="sessionStorage.clear()">
-                    <button id="cancel-btn"class="cancelar-pedido">Cancelar pedido</button>
+                    <button id="cancel-btn" class="cancelar-pedido">Cancelar pedido</button>
                 </a>
             </div>
         </div>

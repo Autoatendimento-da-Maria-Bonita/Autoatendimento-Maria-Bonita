@@ -8,6 +8,7 @@ import cors from 'cors';
 
 const app: Express = express();
 
+// Configuração do Express
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(process.cwd(), 'public')));
@@ -46,5 +47,19 @@ app.get('/gerenciamento_produtos', (req: Request, res: Response) => {
     res.sendFile(path.join(process.cwd(), 'public/html/gerenciamento_produtos.html'));
 });
 
-// Exporta como função Serverless para Vercel
-module.exports = serverless(app);
+app.get('/pagamento/sucesso', (req: Request, res: Response) => {
+    res.sendFile(path.join(process.cwd(), 'public/html/pagamento/sucesso.html'));
+});
+
+app.get('/pagamento/erro', (req: Request, res: Response) => {
+    res.sendFile(path.join(process.cwd(), 'public/html/pagamento/erro.html.html'));
+});
+
+app.get('/pagamento/pendente', (req: Request, res: Response) => {
+    res.sendFile(path.join(process.cwd(), 'public/html/pagamento/pendente.html.html'));
+});
+
+// Inicia o servidor na porta 3000
+app.listen(3000, () => {
+    console.log('Servidor rodando na porta 3000');
+});

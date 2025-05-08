@@ -36,7 +36,7 @@ Melhorar a experiência do cliente em lanchonetes de alta movimentação, reduzi
 ## 📧 Contato
 
 Desenvolvido por: 
-[Adrian J. Quindeler](https://github.com/Adrian-Quindeler),
-[Matheus Oliveira](https://github.com/Matheus-Oli),
-[Oswaldo T. F. Júnior](https://github.com/raijnn),
-[George Belo R. Santos](https://github.com/ManoGeWP),
+[Adrian J. Quindeler](https://github.com/Adrian-Quindeler),  
+[Matheus Oliveira](https://github.com/Matheus-Oli),  
+[Oswaldo T. F. Júnior](https://github.com/raijnn),  
+[George Belo R. Santos](https://github.com/ManoGeWP),  
