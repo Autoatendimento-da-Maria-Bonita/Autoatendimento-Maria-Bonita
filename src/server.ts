@@ -5,6 +5,8 @@ import uploadRouter from '../src/routes/upload';
 import produtosRouter from '../src/routes/produtos';
 import path from 'path';
 import cors from 'cors';
+const http = require('http');
+import * as ngrok from '@ngrok/ngrok';
 
 const app: Express = express();
 
@@ -52,14 +54,23 @@ app.get('/pagamento/sucesso', (req: Request, res: Response) => {
 });
 
 app.get('/pagamento/erro', (req: Request, res: Response) => {
-    res.sendFile(path.join(process.cwd(), 'public/html/pagamento/erro.html.html'));
+    res.sendFile(path.join(process.cwd(), 'public/html/pagamento/erro.html'));
 });
 
 app.get('/pagamento/pendente', (req: Request, res: Response) => {
-    res.sendFile(path.join(process.cwd(), 'public/html/pagamento/pendente.html.html'));
+    res.sendFile(path.join(process.cwd(), 'public/html/pagamento/pendente.html'));
 });
 
-// Inicia o servidor na porta 3000
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
+// Inicia o servidor e o ngrok
+const PORT = 3000;
+app.listen(PORT, async () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+
+    try {
+        await ngrok.authtoken('2wpcqisqw008vpWIqAwWUuL22Md_5gHfBBCPvLYsNniUt7WkS'); // seu token real aqui
+        const listener = await ngrok.connect({ addr: 3000 });
+        console.log(`Ngrok está disponível em: ${listener.url()}`);
+    } catch (error) {
+        console.error('Erro ao conectar com ngrok:', error);
+    }
 });

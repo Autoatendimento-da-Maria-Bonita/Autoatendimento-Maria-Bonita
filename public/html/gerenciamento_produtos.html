@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD de Produtos - Maria Bonita</title>
+    <link rel="stylesheet" href="../css/estilo_gerenciamento_produtos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Cabeçalho -->
+        <header class="header">
+            <div class="header__container">
+                <div class="header__logo-container">
+                    <img src="imagens/MariaBonita.png" alt="Logo Maria Bonita" class="header__logo">
+                    <h1 class="header__title">Gerenciamento de Produtos</h1>
+                </div>
+                <div class="header__actions">
+                    <a href="index" class="btn btn--secondary btn--back">
+                        <span class="btn__icon">←</span>
+                        <span class="btn__text">Voltar</span>
+                    </a>
+                    <div class="search">
+                        <input type="text" id="search-input" class="search__input" placeholder="Buscar produtos...">
+                    </div>
+                    <a href="produtos_service" id="add-product-btn" class="btn btn--primary">
+                        <span class="btn__icon">+</span>
+                        <span class="btn__text">Novo Produto</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Conteúdo principal -->
+        <main class="main">
+            <div class="filters">
+                <div class="filters__group">
+                    <label for="category-filter" class="filters__label">Categoria:</label>
+                    <select id="category-filter" class="filters__select">
+                        <option value="">Todas</option>
+                        <option value="Comidas">Comidas</option>
+                        <option value="Bebidas">Bebidas</option>
+                        <option value="Doces">Doces</option>
+                        <option value="Combos">Combos</option>
+                    </select>
+                </div>
+                <div class="filters__group">
+                    <label for="sort-filter" class="filters__label">Ordenar por:</label>
+                    <select id="sort-filter" class="filters__select">
+                        <option value="name-asc">Nome (A-Z)</option>
+                        <option value="name-desc">Nome (Z-A)</option>
+                        <option value="price-asc">Preço (menor-maior)</option>
+                        <option value="price-desc">Preço (maior-menor)</option>
+                    </select>
+                </div>
+                <button id="clear-filters" class="filters__clear-btn">
+                    <span class="filters__clear-icon">↺</span>
+                    <span class="filters__clear-text">Limpar Filtros</span>
+                </button>
+            </div>
+
+            <div class="products">
+                <div class="products__header">
+                    <div class="products__column products__column--image">Imagem</div>
+                    <div class="products__column products__column--name">Nome</div>
+                    <div class="products__column products__column--category">Categoria</div>
+                    <div class="products__column products__column--price">Preço</div>
+                    <div class="products__column products__column--stock">Estoque</div>
+                    <div class="products__column products__column--actions">Ações</div>
+                </div>
+                
+                <div id="products-list" class="products__list">
+                    <!-- CONTEÚDO ESTÁTICO: Remover ao integrar com backend -->
+                    <div class="product-item">
+                        <div class="product-item__image-container">
+                            <img src="imagem" alt="Hambúrguer" class="product-item__image">
+                        </div>
+                        <div class="product-item__name">Hambúrguer Clássico</div>
+                        <div class="product-item__category">Comidas</div>
+                        <div class="product-item__price">R$ 18,90</div>
+                        <div class="product-item__stock">50 un.</div>
+                        <div class="product-item__actions">
+                            <button class="product-item__edit-btn" data-id="1" data-name="Hambúrguer Clássico">
+                                <span class="product-item__btn-text">Editar</span>
+                            </button>
+                            <button class="product-item__delete-btn" data-id="1" data-name="Hambúrguer Clássico">
+                                <span class="product-item__btn-text">Deletar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="product-item">
+                        <div class="product-item__image-container">
+                            <img src="imagem" alt="Batata Frita" class="product-item__image">
+                        </div>
+                        <div class="product-item__name">Batata Frita Grande</div>
+                        <div class="product-item__category">Comidas</div>
+                        <div class="product-item__price">R$ 12,50</div>
+                        <div class="product-item__stock">100 un.</div>
+                        <div class="product-item__actions">
+                            <button class="product-item__edit-btn" data-id="2" data-name="Batata Frita Grande">
+                                <span class="product-item__btn-text">Editar</span>
+                            </button>
+                            <button class="product-item__delete-btn" data-id="2" data-name="Batata Frita Grande">
+                                <span class="product-item__btn-text">Deletar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="product-item">
+                        <div class="product-item__image-container">
+                            <img src="imagem" alt="Refrigerante" class="product-item__image">
+                        </div>
+                        <div class="product-item__name">Refrigerante Cola</div>
+                        <div class="product-item__category">Bebidas</div>
+                        <div class="product-item__price">R$ 6,00</div>
+                        <div class="product-item__stock">200 un.</div>
+                        <div class="product-item__actions">
+                            <button class="product-item__edit-btn" data-id="3" data-name="Refrigerante Cola">
+                                <span class="product-item__btn-text">Editar</span>
+                            </button>
+                            <button class="product-item__delete-btn" data-id="3" data-name="Refrigerante Cola">
+                                <span class="product-item__btn-text">Deletar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="product-item">
+                        <div class="product-item__image-container">
+                            <img src="imagem" alt="Sorvete" class="product-item__image">
+                        </div>
+                        <div class="product-item__name">Sorvete de Chocolate</div>
+                        <div class="product-item__category">Doces</div>
+                        <div class="product-item__price">R$ 8,50</div>
+                        <div class="product-item__stock">30 un.</div>
+                        <div class="product-item__actions">
+                            <button class="product-item__edit-btn" data-id="4" data-name="Sorvete de Chocolate">
+                                <span class="product-item__btn-text">Editar</span>
+                            </button>
+                            <button class="product-item__delete-btn" data-id="4" data-name="Sorvete de Chocolate">
+                                <span class="product-item__btn-text">Deletar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="product-item">
+                        <div class="product-item__image-container">
+                            <img src="imagem" alt="Combo" class="product-item__image">
+                        </div>
+                        <div class="product-item__name">Combo Família</div>
+                        <div class="product-item__category">Combos</div>
+                        <div class="product-item__price">R$ 49,90</div>
+                        <div class="product-item__stock">15 un.</div>
+                        <div class="product-item__actions">
+                            <button class="product-item__edit-btn" data-id="5" data-name="Combo Família">
+                                <span class="product-item__btn-text">Editar</span>
+                            </button>
+                            <button class="product-item__delete-btn" data-id="5" data-name="Combo Família">
+                                <span class="product-item__btn-text">Deletar</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- FIM DO CONTEÚDO ESTÁTICO -->
+                </div>
+            </div>
+            
+            <div class="pagination">
+                <button id="prev-page" class="pagination__button pagination__button--prev" disabled>
+                    <span class="pagination__icon">←</span>
+                    <span class="pagination__text">Anterior</span>
+                </button>
+                <div id="pagination-info" class="pagination__info">Página 1 de 1</div>
+                <button id="next-page" class="pagination__button pagination__button--next" disabled>
+                    <span class="pagination__text">Próxima</span>
+                    <span class="pagination__icon">→</span>
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="footer__text">&copy; 2024 Maria Bonita</p>
+        </footer>
+    </div>
+
+    <!-- Modal para adicionar/editar produto -->
+    <div id="product-modal" class="modal">
+        <div class="modal__overlay"></div>
+        <div class="modal__container">
+            <div class="modal__header">
+                <h2 id="modal-title" class="modal__title">Adicionar Produto</h2>
+                <button id="close-modal" class="modal__close">×</button>
+            </div>
+            <div class="modal__content">
+                <form id="product-form" class="form">
+                    <input type="hidden" id="product-id" name="product-id">
+                    
+                    <div class="form__group">
+                        <label for="product-name" class="form__label">Nome do Produto*</label>
+                        <input type="text" id="product-name" name="product-name" class="form__input" required>
+                    </div>
+                    
+                    <div class="form__group">
+                        <label for="product-category" class="form__label">Categoria*</label>
+                        <select id="product-category" name="product-category" class="form__select" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="Comidas">Comidas</option>
+                            <option value="Bebidas">Bebidas</option>
+                            <option value="Doces">Doces</option>
+                            <option value="Combos">Combos</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form__row">
+                        <div class="form__group">
+                            <label for="product-price" class="form__label">Preço (R$)*</label>
+                            <input type="number" id="product-price" name="product-price" min="0" step="0.01" class="form__input" required>
+                        </div>
+                        
+                        <div class="form__group">
+                            <label for="product-stock" class="form__label">Estoque*</label>
+                            <input type="number" id="product-stock" name="product-stock" min="0" step="1" class="form__input" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form__group">
+                        <label for="product-image" class="form__label">URL da Imagem</label>
+                        <input type="text" id="product-image" name="product-image" class="form__input" placeholder="https://exemplo.com/imagem.jpg">
+                    </div>
+                    
+                    <div class="form__group">
+                        <label class="form__label">Prévia da Imagem</label>
+                        <div id="image-preview" class="image-preview">
+                            <div class="image-preview__placeholder">
+                                <span class="image-preview__text">Sem imagem</span>
+                            </div>
+                            <img id="preview-image" class="image-preview__image" src="/placeholder.svg" alt="Prévia da imagem" style="display: none;">
+                        </div>
+                    </div>
+                    
+                    <div class="form__actions">
+                        <button type="button" id="cancel-button" class="btn btn--secondary">Cancelar</button>
+                        <button type="submit" class="btn btn--primary">Salvar Produto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmação para Deletar produto -->
+    <div id="confirm-delete-modal" class="modal">
+        <div class="modal__overlay"></div>
+        <div class="modal__container modal__container--small">
+            <div class="modal__header">
+                <h2 class="modal__title">Confirmar Exclusão</h2>
+                <button id="close-confirm-delete-modal" class="modal__close">×</button>
+            </div>
+            <div class="modal__content">
+                <div class="confirm">
+                    <div class="confirm__icon">⚠️</div>
+                    <p id="confirm-delete-message" class="confirm__message">
+                        Tem certeza que deseja deletar este produto? Esta ação não pode ser desfeita.
+                    </p>
+                    <div class="confirm__actions">
+                        <button id="cancel-delete" class="btn btn--secondary">Cancelar</button>
+                        <button id="confirm-delete" class="btn btn--danger">Deletar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmação para atualizar produto -->
+    <div id="confirm-update-modal" class="modal">
+        <div class="modal__overlay"></div>
+        <div class="modal__container modal__container--small">
+            <div class="modal__header">
+                <h2 class="modal__title">Confirmar Atualização</h2>
+                <button id="close-confirm-update-modal" class="modal__close">×</button>
+            </div>
+            <div class="modal__content">
+                <div class="confirm confirm--update">
+                    <div class="confirm__icon confirm__icon--update">✓</div>
+                    <p id="confirm-update-message" class="confirm__message">
+                        Confirmar as alterações no produto?
+                    </p>
+                    <div class="product-summary">
+                        <div class="product-summary__row">
+                            <span class="product-summary__label">Nome:</span>
+                            <span id="summary-name" class="product-summary__value">Hambúrguer Clássico</span>
+                        </div>
+                        <div class="product-summary__row">
+                            <span class="product-summary__label">Categoria:</span>
+                            <span id="summary-category" class="product-summary__value">Comidas</span>
+                        </div>
+                        <div class="product-summary__row">
+                            <span class="product-summary__label">Preço:</span>
+                            <span id="summary-price" class="product-summary__value">R$ 18,90</span>
+                        </div>
+                        <div class="product-summary__row">
+                            <span class="product-summary__label">Estoque:</span>
+                            <span id="summary-stock" class="product-summary__value">50 un.</span>
+                        </div>
+                    </div>
+                    <div class="confirm__actions">
+                        <button id="cancel-update" class="btn btn--secondary">Voltar</button>
+                        <button id="confirm-update" class="btn btn--primary">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de notificação -->
+    <div id="toast" class="toast">
+        <div class="toast__content">
+            <span class="toast__icon">✓</span>
+            <div class="toast__message" id="toast-message"></div>
+            <button class="toast__close" id="toast-close">×</button>
+        </div>
+    </div>
+
+    <script src="../js/gerenciamento_produtos.js"></script>
+</body>
+</html>
