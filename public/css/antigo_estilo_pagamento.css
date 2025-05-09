@@ -15,6 +15,9 @@
     --color-text-lighter: #9E9E9E;
     --color-border: #E0E0E0;
     --color-disabled: #C1C1C1;
+    --color-scrollbar: #D0D0D0;
+    --color-scrollbar-thumb: #A0A0A0;
+    --color-scrollbar-thumb-hover: #888888;
     
     --font-primary: 'Montserrat', sans-serif;
     --font-display: 'Lora', serif;
@@ -54,10 +57,38 @@ html, body {
     background-color: var(--color-background);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evita scroll horizontal */
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Faz o corpo ocupar toda a altura da viewport */
+}
+
+/* Estilização da barra de rolagem para diferentes navegadores */
+/* Para navegadores baseados em WebKit (Chrome, Safari, Opera) */
 ::-webkit-scrollbar {
-    display: none;
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-scrollbar);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar-thumb);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-scrollbar-thumb-hover);
+}
+
+/* Para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar);
 }
 
 .page {
@@ -120,6 +151,15 @@ html, body {
     width: 100px;
     height: auto;
     transition: var(--transition-normal);
+}
+
+.main {
+    flex: 1; /* Faz o conteúdo principal expandir para preencher o espaço disponível */
+    padding: var(--spacing-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    overflow-y: auto; /* Adiciona scroll vertical apenas quando necessário */
 }
 
 .shop__sumarry {
@@ -198,24 +238,19 @@ html, body {
     margin-top: 10px;
 }
 
-.main {
-    flex: 1;
-    padding: var(--spacing-lg);
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
+/* OPÇÃO 1: Footer sticky (fica no final e permanece lá ao rolar até o final) */
 .footer {
     background-color: var(--color-surface);
     padding: var(--spacing-md) var(--spacing-lg);
     border-top: 1px solid var(--color-border);
     box-shadow: var(--shadow-sm);
-    bottom: 0;
     width: 100%;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
 }
 
-/* Mais uma ctrl+c ctrl+v do código do Matheus, pode ter coisa aqui sem importância nenhuma como pode ser coisas essenciais */
+*/
 
 .debug {
     display: none;
@@ -464,8 +499,7 @@ html, body {
     opacity: 0.8;
 }
 
-/* Somente nessa seção abaixo não houveram mudanças */
-
+/* Popup de avaliação */
 .popup {
     position: fixed;
     top: 0;
