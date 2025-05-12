@@ -25,6 +25,10 @@ app.get('/', (req: Request, res: Response) => {
     res.sendFile(path.join(process.cwd(), 'public/html/login.html'));
 });
 
+app.get('/login', (req: Request, res: Response) => {
+    res.sendFile(path.join(process.cwd(), 'public/html/login.html'));
+});
+
 app.get('/index', (req: Request, res: Response) => {
     res.sendFile(path.join(process.cwd(), 'public/html/index.html'));
 });

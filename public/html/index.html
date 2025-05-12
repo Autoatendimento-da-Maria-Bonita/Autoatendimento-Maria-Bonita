@@ -17,6 +17,13 @@
                 <h2 class="sidebar__title">Maria Bonita</h2>
             </div>
             
+            <button class="sidebar__close" id="close-menu">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
             <nav class="sidebar__nav">
                 <a href="#" class="sidebar__link sidebar__link--active">
                     <svg class="sidebar__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -176,6 +183,107 @@
                     </div>
                 </section>
                 
+                
+                <section class="reviews-section">
+                    <div class="chart-card">
+                        <div class="chart-card__header">
+                            <h3 class="chart-card__title">Avaliações do Sistema</h3>
+                            <div class="chart-card__actions">
+                                <button class="chart-card__button chart-card__button--active">Últimos 30 dias</button>
+                            </div>
+                        </div>
+                        <div class="chart-card__content reviews-card__content">
+                            <div class="ratings-overview">
+                                <div class="rating-average">
+                                    <div class="rating-average__value">4.2</div>
+                                    <div class="rating-average__stars">
+                                        <span class="star star--filled">★</span>
+                                        <span class="star star--filled">★</span>
+                                        <span class="star star--filled">★</span>
+                                        <span class="star star--filled">★</span>
+                                        <span class="star star--half">★</span>
+                                    </div>
+                                    <div class="rating-average__label">Nota Média</div>
+                                </div>
+                                
+                                <div class="rating-stats">
+                                    <div class="rating-bar-container">
+                                        <div class="rating-label">5 ★</div>
+                                        <div class="rating-bar">
+                                            <div class="rating-bar__fill" style="width: 65%;"></div>
+                                        </div>
+                                        <div class="rating-count">65%</div>
+                                    </div>
+                                    <div class="rating-bar-container">
+                                        <div class="rating-label">4 ★</div>
+                                        <div class="rating-bar">
+                                            <div class="rating-bar__fill" style="width: 20%;"></div>
+                                        </div>
+                                        <div class="rating-count">20%</div>
+                                    </div>
+                                    <div class="rating-bar-container">
+                                        <div class="rating-label">3 ★</div>
+                                        <div class="rating-bar">
+                                            <div class="rating-bar__fill" style="width: 10%;"></div>
+                                        </div>
+                                        <div class="rating-count">10%</div>
+                                    </div>
+                                    <div class="rating-bar-container">
+                                        <div class="rating-label">2 ★</div>
+                                        <div class="rating-bar">
+                                            <div class="rating-bar__fill" style="width: 3%;"></div>
+                                        </div>
+                                        <div class="rating-count">3%</div>
+                                    </div>
+                                    <div class="rating-bar-container">
+                                        <div class="rating-label">1 ★</div>
+                                        <div class="rating-bar">
+                                            <div class="rating-bar__fill" style="width: 2%;"></div>
+                                        </div>
+                                        <div class="rating-count">2%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="latest-ratings">
+                                <h4 class="latest-ratings__title">Últimas Avaliações</h4>
+                                <div class="latest-ratings__list">
+                                    <div class="latest-rating-item">
+                                        <div class="latest-rating-date">10/05/2025</div>
+                                        <div class="latest-rating-stars">
+                                            <span class="star star--filled">★</span>
+                                            <span class="star star--filled">★</span>
+                                            <span class="star star--filled">★</span>
+                                            <span class="star star--filled">★</span>
+                                            <span class="star star--filled">★</span>
+                                        </div>
+                                    </div>
+                                    <div class="latest-rating-item">
+                                        <div class="latest-rating-date">09/05/2025</div>
+                                        <div class="latest-rating-stars">
+                                            <span class="star star--filled">★</span>
+                                            <span class="star star--filled">★</span>
+                                            <span class="star star--filled">★</span>
+                                            <span class="star star--filled">★</span>
+                                            <span class="star">★</span>
+                                        </div>
+                                    </div>
+                                    <div class="latest-rating-item">
+                                        <div class="latest-rating-date">08/05/2025</div>
+                                        <div class="latest-rating-stars">
+                                            <span class="star star--filled">★</span>
+                                            <span class="star star--filled">★</span>
+                                            <span class="star star--filled">★</span>
+                                            <span class="star">★</span>
+                                            <span class="star">★</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
                 <section class="action-section">
                     <a href="gerenciamento_produtos" class="action-card">
                         <div class="action-card__icon">
@@ -209,13 +317,38 @@
     </div>
     
     <script>
-        // Toggle menu em dispositivos móveis
+        // Menu mobile
         document.addEventListener('DOMContentLoaded', function() {
             const menuToggle = document.getElementById('menu-toggle');
+            const closeMenu = document.getElementById('close-menu');
             const dashboard = document.querySelector('.dashboard');
+            const sidebar = document.querySelector('.sidebar');
+            const menuLinks = document.querySelectorAll('.sidebar__link');
             
+            // Abrir menu
             menuToggle.addEventListener('click', function() {
-                dashboard.classList.toggle('dashboard--menu-open');
+                dashboard.classList.add('dashboard--menu-open');
+            });
+            
+            // Fechar menu com o botão X
+            closeMenu.addEventListener('click', function() {
+                dashboard.classList.remove('dashboard--menu-open');
+            });
+            
+            // Fechar menu ao clicar em um link
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    dashboard.classList.remove('dashboard--menu-open');
+                });
+            });
+            
+            // Fechar menu ao clicar fora da barra lateral
+            document.addEventListener('click', function(event) {
+                if (dashboard.classList.contains('dashboard--menu-open') && 
+                    !sidebar.contains(event.target) && 
+                    !menuToggle.contains(event.target)) {
+                    dashboard.classList.remove('dashboard--menu-open');
+                }
             });
         });
     </script>
