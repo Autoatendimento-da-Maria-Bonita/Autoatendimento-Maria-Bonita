@@ -1,46 +1,223 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Maria Bonita - Painel Administrativo</title>
     <link rel="shortcut icon" href="../imagens/MariaBonita.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css" />
-    <link rel="icon" href="../../imagens/MariaBonita.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <header>
-        <img src="../imagens/MariaBonita.png" alt="Logo Maria Bonita" class="logo" />
-        <h1>Painel Administrativo</h1>
-        <p class="subtitle">Resumo de vendas e desempenho</p>
-    </header>
-
-    <main>
-        <section class="kpi-container">
-            <div class="kpi">
-                <h2>Total de Vendas</h2>
-                <p>R$ 1.250,00</p>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="sidebar__header">
+                <img src="../imagens/MariaBonita.png" alt="Logo Maria Bonita" class="sidebar__logo" />
+                <h2 class="sidebar__title">Maria Bonita</h2>
             </div>
-            <div class="kpi">
-                <h2>Pedidos Finalizados</h2>
-                <p>85</p>
+            
+            <nav class="sidebar__nav">
+                <a href="#" class="sidebar__link sidebar__link--active">
+                    <svg class="sidebar__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="9"></rect>
+                        <rect x="14" y="3" width="7" height="5"></rect>
+                        <rect x="14" y="12" width="7" height="9"></rect>
+                        <rect x="3" y="16" width="7" height="5"></rect>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="produtos_service" class="sidebar__link">
+                    <svg class="sidebar__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span>Cadastrar Produto</span>
+                </a>
+                <a href="tela_inicial" class="sidebar__link">
+                    <svg class="sidebar__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span>Vendas</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar__footer">
+                <a href="/" class="sidebar__link sidebar__link--logout">
+                    <svg class="sidebar__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Sair</span>
+                </a>
             </div>
-            <div class="kpi">
-                <h2>Produto Mais Vendido</h2>
-                <p>Batata</p>
+        </aside>
+
+        <main class="main">
+            <header class="header">
+                <div class="header__content">
+                    <button class="header__menu-toggle" id="menu-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    
+                    <div class="header__title">
+                        <h1>Painel Administrativo</h1>
+                        <p>Resumo de vendas e desempenho</p>
+                    </div>
+                    
+                    <div class="header__actions">
+                        <div class="header__user">
+                            <div class="header__avatar">
+                                <span>MB</span>
+                            </div>
+                            <span class="header__username">Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="dashboard__content">
+                <section class="kpi-section">
+                    <div class="kpi-card">
+                        <div class="kpi-card__icon kpi-card__icon--sales">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                        </div>
+                        <div class="kpi-card__content">
+                            <h3 class="kpi-card__title">Total de Vendas</h3>
+                            <p class="kpi-card__value">R$ 12.450,00</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="chart-section">
+                    <div class="chart-card">
+                        <div class="chart-card__header">
+                            <h3 class="chart-card__title">Vendas por Categoria</h3>
+                            <div class="chart-card__actions">
+                                <select class="chart-card__select">
+                                    <option value="week">Esta Semana</option>
+                                    <option value="month" selected>Este Mês</option>
+                                    <option value="year">Este Ano</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-card__content">
+                            <div class="chart-placeholder">
+                                <div class="chart-bar" style="height: 90%;" data-label="Refrigerante" data-value="R$ 5.200,00"></div>
+                                <div class="chart-bar" style="height: 65%;" data-label="Café" data-value="R$ 3.800,00"></div>
+                                <div class="chart-bar" style="height: 45%;" data-label="Batata" data-value="R$ 2.600,00"></div>
+                                <div class="chart-bar" style="height: 30%;" data-label="Outro Chips" data-value="R$ 1.750,00"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-card__header">
+                            <h3 class="chart-card__title">Produtos Mais Vendidos</h3>
+                            <div class="chart-card__actions">
+                                <button class="chart-card__button chart-card__button--active">Top 5</button>
+                            </div>
+                        </div>
+                        <div class="chart-card__content">
+                            <ul class="product-list">
+                                <li class="product-item">
+                                    <span class="product-rank">1</span>
+                                    <span class="product-name">Refrigerante 600ml</span>
+                                    <div class="product-bar">
+                                        <div class="product-bar__fill" style="width: 100%;"></div>
+                                    </div>
+                                    <span class="product-value">70 un.</span>
+                                </li>
+                                <li class="product-item">
+                                    <span class="product-rank">2</span>
+                                    <span class="product-name">Energético</span>
+                                    <div class="product-bar">
+                                        <div class="product-bar__fill" style="width: 86%;"></div>
+                                    </div>
+                                    <span class="product-value">60 un.</span>
+                                </li>
+                                <li class="product-item">
+                                    <span class="product-rank">3</span>
+                                    <span class="product-name">Café</span>
+                                    <div class="product-bar">
+                                        <div class="product-bar__fill" style="width: 71%;"></div>
+                                    </div>
+                                    <span class="product-value">50 un.</span>
+                                </li>
+                                <li class="product-item">
+                                    <span class="product-rank">4</span>
+                                    <span class="product-name">Batata</span>
+                                    <div class="product-bar">
+                                        <div class="product-bar__fill" style="width: 64%;"></div>
+                                    </div>
+                                    <span class="product-value">45 un.</span>
+                                </li>
+                                <li class="product-item">
+                                    <span class="product-rank">5</span>
+                                    <span class="product-name">Chips pequeno</span>
+                                    <div class="product-bar">
+                                        <div class="product-bar__fill" style="width: 57%;"></div>
+                                    </div>
+                                    <span class="product-value">40 un.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="action-section">
+                    <a href="gerenciamento_produtos" class="action-card">
+                        <div class="action-card__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </div>
+                        <div class="action-card__content">
+                            <h3 class="action-card__title">Gerenciar Produtos</h3>
+                            <p class="action-card__description">Adicione novos produtos ao catálogo</p>
+                        </div>
+                    </a>
+                    
+                    <a href="tela_inicial" class="action-card">
+                        <div class="action-card__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                        </div>
+                        <div class="action-card__content">
+                            <h3 class="action-card__title">Iniciar Vendas</h3>
+                            <p class="action-card__description">Acesse o terminal de vendas</p>
+                        </div>
+                    </a>
+                </section>
             </div>
-        </section>
-
-        <section class="actions">
-            <a href="gerenciamento_produtos"><button class="button confirm">Gerenciar Produtos</button></a>
-            <a href="tela_inicial"><button class="button confirm">Vender</button></a>
-        </section>
-    </main>
-
-    <footer>
-        <p>Maria Bonita © 2024</p>
-    </footer>
+        </main>
+    </div>
+    
+    <script>
+        // Toggle menu em dispositivos móveis
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const dashboard = document.querySelector('.dashboard');
+            
+            menuToggle.addEventListener('click', function() {
+                dashboard.classList.toggle('dashboard--menu-open');
+            });
+        });
+    </script>
 </body>
 </html>
