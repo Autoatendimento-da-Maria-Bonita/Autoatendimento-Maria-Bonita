@@ -71,6 +71,7 @@ loginForm.addEventListener("submit", async (e) => {
   e.preventDefault()
 
   const email = loginForm.email.value
+  sessionStorage.setItem("email", email)
   const senha = loginForm.senha.value
 
   try {
