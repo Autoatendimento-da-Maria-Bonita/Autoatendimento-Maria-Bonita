@@ -28,9 +28,7 @@ pagamentoRouter.post('/criar-preferencia', async (req, res) => {
       unit_price: parseFloat(details.price),
     }));
 
-    // Inicia o ngrok para obter a URL externa
-    const ngrokUrl = await ngrok.connect({ addr: 3000 });
-    console.log('Ngrok URL:', ngrokUrl); // Mostra a URL do ngrok
+	const ngrokUrl = await ngrok.connect({ addr: 3000 });
 
     // Cria a preferência no Mercado Pago com as URLs dinâmicas
     const preference = await preferenceClient.create({

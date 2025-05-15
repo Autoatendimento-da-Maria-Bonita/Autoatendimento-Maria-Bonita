@@ -67,19 +67,19 @@ app.get('/pagamento/pendente', (req: Request, res: Response) => {
 
 // Inicia o servidor e o ngrok
 
-// const PORT = 3000;
-// app.listen(PORT, async () => {
-//     console.log(`Servidor rodando na porta ${PORT}`);
+const PORT = 3000;
+app.listen(PORT, async () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 
-//     try {
-//         await ngrok.authtoken('2wpcqisqw008vpWIqAwWUuL22Md_5gHfBBCPvLYsNniUt7WkS'); // seu token real aqui
-//         const listener = await ngrok.connect({ addr: 3000 });
-//         console.log(`Ngrok está disponível em: ${listener.url()}`);
-//     } catch (error) {
-//         console.error('Erro ao conectar com ngrok:', error);
-//     }
-// });
-
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
+    try {
+        await ngrok.authtoken('2wrvSWj7yPsZxu0VZH7SeR5CeS0_6eWbScVfzXmAVvF12ZcNa');
+        const listener = await ngrok.connect({ addr: PORT });
+        console.log(`Ngrok está disponível em: ${listener.url()}`);
+    } catch (error) {
+        console.error('Erro ao conectar com ngrok:', error);
+    }
 });
+
+// app.listen(3000, () => {
+//     console.log('Servidor rodando na porta 3000');
+// });
