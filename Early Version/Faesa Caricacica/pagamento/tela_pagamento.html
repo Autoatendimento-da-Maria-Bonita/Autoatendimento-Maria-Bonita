@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Pagamento</title>
+    <link rel="stylesheet" href="estilo_pagamento.css">
+</head>
+<div id="avaliacao-popup" class="popup hidden">
+    <div class="popup-content">
+        <h2>O que achou do atendimento?</h2>
+        <p>De 0 a 5 estrelas:</p>
+        <div class="stars" id="stars-container">
+            <!-- estrelas criadas dinamicamente via JS -->
+        </div>
+        <button id="enviar-avaliacao">Enviar</button>
+    </div>
+</div>
+
+<body>
+    <main>
+        <div class="payment-container">
+            <div class="product-list">
+                <div class="header">
+                    <span>&ThickSpace;Produto</span>    
+                    <span>Quantidade</span>
+                    <span>Valor</span>
+                    <span>Subtotal</span>
+                </div>
+            </div>
+            <div class="payment-methods">
+                <h2>Métodos de pagamento</h2>
+                <p>Nosso sistema aceita as seguintes formas de pagamento:</p>
+                <div class="payment-icons">
+                    <img src="../../imagens/pix.png" alt="Pix">
+                    <img src="../../imagens/debito.jpeg" alt="Visa">
+                    <img src="../../imagens/dinheiro.jpeg" alt="Dinheiro">
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="botoes">
+            <a href="../tela_inicial/tela_inicial" onclick="sessionStorage.clear()">
+                <button id="cancel-btn"class="cancelar-pedido">Cancelar pedido</button>
+            </a>
+            <form id="payment-form" action="processar_pagamento.php" method="POST">
+                <input type="hidden" name="cart" id="cart_input">
+                <button id="pay-btn" onclick="EnviarAoBaco()" class="finalizar-pedido">Finalizar pedido</button>
+            </form>
+        </div>
+        <p>&copy; 2024 Maria Bonita</p>
+    </footer>
+    <script src="script_pagamento.js"></script>
+</body>
+</html>

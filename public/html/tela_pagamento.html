@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Maria Bonita - Tela de Pagamento</title>
+	<link rel="shortcut icon" href="../imagens/MariaBonita.png" type="image/x-icon">
+	<link rel="stylesheet" href="../css/estilo_pagamento.css">
+	<link rel="icon" href="../../imagens/MariaBonita.png" type="image/png">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap"
+		rel="stylesheet">
+</head>
+
+<body>
+	<div id="avaliacao-popup" class="popup hidden">
+		<div class="popup-content">
+			<h2>O que achou do atendimento?</h2>
+			<p>De 0 a 5 estrelas:</p>
+			<div class="stars" id="stars-container">
+				<!-- estrelas criadas dinamicamente via JS -->
+			</div>
+			<button id="enviar-avaliacao">Enviar</button>
+		</div>
+	</div>
+
+	<header class="header">
+		<div class="header__container">
+			<div class="header__back"
+				onclick="window.location.href='/tela_compras'; sessionStorage.removeItem('cart');">
+				<svg class="header__back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M19 12H5M12 19l-7-7 7-7" />
+				</svg>
+				<span class="header__back-text">Voltar</span>
+			</div>
+			<div class="header__logo-container">
+				<img class="header__logo" src="../imagens/MariaBonita.png" alt="Logo Maria Bonita">
+			</div>
+		</div>
+	</header>
+
+	<main class="main">
+		<p id="debug" class="debug"></p>
+
+		<div class="shop__welcome">
+			<h1 class="shop__title">Resumo da Compra</h1>
+		</div>
+
+		<section class="shop__sumarry">
+			<div class="payment__container">
+				<div class="product__list">
+					<div class="table__header">
+						<span>Produto</span>
+						<span class="title__align">Quantidade</span>
+						<span class="title__align">Valor</span>
+						<span class="title__align">Subtotal</span>
+					</div>
+					<!-- Conteúdo dos produtos será adicionado pelo JavaScript -->
+				</div>
+			</div>
+		</section>
+
+		<section class="payment__methods">
+			<div class="shop__welcome">
+				<h2 class="shop__title">Método de Pagamento</h2>
+				<p>Este sistema aceita os seguintes métodos de pagamento*:</p>
+			</div>
+			<div class="payment__icons">
+				<img src="../imagens/Pix.png" alt="Pix">
+				<img src="../imagens/cartoes.png" alt="Cartão">
+				<img src="../imagens/dinheiro.png" alt="Dinheiro">
+				<div class="payment__observations">
+					<p>* Aceitamos apenas cartão de débito.</p>
+					<p>* Ao clicar no método, você será redirecionado para outra página.</p>
+					<p>* Ao escolher "dinheiro", resolva o pagamento com um atendente.</p>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer class="footer">
+		<div class="cart">
+			<div class="cart__summary">
+				<div class="cart__actions">
+					<button class="cart__cancel" onclick="cancelarPedido()">
+						<svg class="cart__cancel-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+							fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+							stroke-linejoin="round">
+							<circle cx="12" cy="12" r="10"></circle>
+							<line x1="15" y1="9" x2="9" y2="15"></line>
+							<line x1="9" y1="9" x2="15" y2="15"></line>
+						</svg>
+						Cancelar
+					</button>
+					<a href="" class="cart__checkout-link"> <!-- Navegação retirada para fins de visualização -->
+						<button class="cart__checkout " disabled> <!-- Checkout retirado para fins de visualização -->
+							<svg class="cart__checkout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+								stroke-linejoin="round">
+								<polyline points="9 11 12 14 22 4"></polyline>
+								<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+							</svg>
+							Finalizar
+						</button>
+					</a>
+				</div>
+			</div>
+		</div>
+		<p class="footer__copyright">&copy; 2025 Maria Bonita</p>
+	</footer>
+
+	<script src="https://sdk.mercadopago.com/js/v2"></script>
+	<script src="../js/script_pagamento.js"></script>
+</body>
+
+</html>

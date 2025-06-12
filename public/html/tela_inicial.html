@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria Bonita - Tela Inicial</title>
+    <link rel="shortcut icon" href="../imagens/MariaBonita.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/estilo_inicial.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="../../imagens/MariaBonita.png" type="image/png">
+</head>
+<body class="page">
+    <div class="page__background"></div>
+    
+    <header class="header">
+        <div class="header__logo-container">
+            <img class="header__logo" src="../imagens/MariaBonita.png" alt="Logo Maria Bonita">
+        </div>
+        <div class="header__content">
+            <h1 class="header__title">Maria Bonita</h1>
+            <p class="header__text">
+                Olá! Seja bem-vindo à Maria Bonita. <br>
+                Abra e descubra o segredo para um dia melhor!
+            </p>
+            <span class="header-back">Voltar ao painel</span>
+        </div>
+    </header>
+    
+    <main class="main">
+        <div class="container">
+            <div class="card">
+                <div class="card__content">
+                    <h2 class="card__title">Como podemos te chamar?</h2>
+                    <form id="nameForm" class="form">
+                        <div class="form__group">
+                            <input type="text" id="name" name="name" class="form__input" placeholder="Qual o seu nome?" required>
+                            <p class="form__error">Por favor, informe seu nome</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <a href="/tela_compras" class="footer__link" id="continueLink">
+            <button class="continueButton">Ver todos os produtos</button>
+        </a>
+        <span class="footer__copy">&copy; 2024 Maria Bonita</span>
+    </footer>
+
+    <script type="module" src="../js/tela_inicial.js"></script>
+</body>
+</html>

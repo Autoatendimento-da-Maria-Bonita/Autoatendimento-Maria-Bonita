@@ -1,0 +1,173 @@
+html, body {
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+main {
+    width: 95%;
+    margin: auto;
+    border-radius: 15px;
+}
+
+.product-list {
+    margin: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.product-item, .header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    margin-bottom: 10px;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.header{
+    border: none;
+    margin-bottom: 20px;
+}
+
+.product-item span {
+    margin: 0 5px;
+}
+
+.total {
+    margin-top: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: right;
+}
+
+.payment-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.remove-btn {
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background-color: #ff1a1a;
+}
+
+.payment-methods {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.payment-methods h2 {
+    margin-bottom: 10px;
+}
+
+.payment-icons img {
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    color: black;
+}
+
+footer .botoes button {
+    padding: 15px 30px;
+    margin: 10px 20px;
+    font-size: 20px;
+}
+
+#cancel-btn {
+    background-color: #ff4d4d;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+#pay-btn {
+    background-color: #ccc;
+    border-radius: 15px;
+    cursor: not-allowed;
+}
+
+#pay-btn.enabled {
+    background-color: #60ff60;
+    cursor: pointer;
+}
+
+footer p{
+    margin: 20px 0 0 0;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.popup-content h2 {
+    margin-bottom: 10px;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.star {
+    font-size: 2rem;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.3s;
+}
+
+.star.selected,
+.star:hover,
+.star:hover ~ .star {
+    color: gold;
+}
+
+.popup button {
+    padding: 10px 20px;
+    background-color: #60ff60;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
