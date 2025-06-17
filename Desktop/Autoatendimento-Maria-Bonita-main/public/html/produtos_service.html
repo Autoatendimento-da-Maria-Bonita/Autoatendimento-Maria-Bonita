@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de Produto | Maria Bonita</title>
+    <link rel="stylesheet" href="../css/produtos_service.css" />
+    <link rel="icon" href="../imagens/MariaBonita.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        <div class="form-container">
+            <div class="form-header">
+                <img src="../imagens/MariaBonita.png" alt="Logo Maria Bonita" class="logo" />
+                <h1 class="title">Cadastro de Produto</h1>
+                <p class="subtitle">Preencha os dados para cadastrar um novo produto</p>
+            </div>
+
+            <form id="product-form" class="product-form">
+                <div class="form-group">
+                    <label for="nome">Nome do Produto</label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite o nome do produto" required />
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="preco">Preço (R$)</label>
+                        <input type="number" id="preco" name="preco" placeholder="0,00" required step="0.01" min="0" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="categoria">Categoria</label>
+                        <select name="categoria" id="categoria" required>
+                            <option value="Comidas" selected>Comidas</option>
+                            <option value="Bebidas">Bebidas</option>
+                            <option value="Doces">Doces</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Quantidade_em_estoque">Quantidade em Estoque</label>
+                    <input type="number" id="Quantidade_em_estoque" name="Quantidade_em_estoque" placeholder="Quantidade disponível" required min="0" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="imagem">Imagem do Produto</label>
+                    <div id="drop-area" class="drop-area">
+                        <input type="file" id="imagem" name="imagem" accept="image/*" required class="file-input" />
+                        <div class="drop-area-content">
+                            <div id="preview-container" class="preview-container">
+                                <img id="preview-image" class="preview-image" src="/placeholder.svg" alt="Prévia da imagem" style="display: none;">
+                                <div id="placeholder" class="placeholder">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <p>Arraste uma imagem ou clique para selecionar</p>
+                                </div>
+                            </div>
+                            <div class="file-info">
+                                <span id="file-name" class="file-name">Nenhum arquivo selecionado</span>
+                                <button type="button" id="remove-file" class="remove-file" style="display: none;">Remover</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <a href="gerenciamento_produtos" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
+                </div>
+                
+                <div id="mensagem" class="message"></div>
+            </form>
+        </div>
+        
+        <div class="decoration">
+            <div class="decoration-circle decoration-circle--1"></div>
+            <div class="decoration-circle decoration-circle--2"></div>
+            <div class="decoration-circle decoration-circle--3"></div>
+        </div>
+    </div>
+    
+    <script type="module" src="../js/produtos_service.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropArea = document.getElementById('drop-area');
+            const fileInput = document.getElementById('imagem');
+            const previewImage = document.getElementById('preview-image');
+            const placeholder = document.getElementById('placeholder');
+            const fileName = document.getElementById('file-name');
+            const removeButton = document.getElementById('remove-file');
+            
+            // Função para mostrar a prévia da imagem
+            function showPreview(file) {
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block';
+                        placeholder.style.display = 'none';
+                        fileName.textContent = file.name;
+                        removeButton.style.display = 'block';
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+            }
+            
+            // Função para remover a imagem
+            function removeImage() {
+                fileInput.value = '';
+                previewImage.src = '';
+                previewImage.style.display = 'none';
+                placeholder.style.display = 'flex';
+                fileName.textContent = 'Nenhum arquivo selecionado';
+                removeButton.style.display = 'none';
+            }
+            
+            // Evento de clique no drop area
+            dropArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            // Evento de mudança no input de arquivo
+            fileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    showPreview(file);
+                }
+            });
+            
+            // Evento de clique no botão de remover
+            removeButton.addEventListener('click', function(e) {
+                e.stopPropagation(); // Impede que o clique propague para o drop area
+                removeImage();
+            });
+            
+            // Eventos de drag and drop
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                dropArea.classList.add('highlight');
+            }
+            
+            function unhighlight() {
+                dropArea.classList.remove('highlight');
+            }
+            
+            dropArea.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const file = dt.files[0];
+                
+                if (file && file.type.startsWith('image/')) {
+                    fileInput.files = dt.files;
+                    showPreview(file);
+                } else {
+                    alert('Por favor, selecione apenas arquivos de imagem.');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

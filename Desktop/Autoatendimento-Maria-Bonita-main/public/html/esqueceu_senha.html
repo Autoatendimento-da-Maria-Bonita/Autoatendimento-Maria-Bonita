@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recuperar Senha - Maria Bonita</title>
+  <link rel="stylesheet" href="../css/login.css" />
+  <link rel="icon" href="../imagens/MariaBonita.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page">
+    <div class="login-container">
+      <div class="login-header">
+        <img src="../imagens/MariaBonita.png" alt="Logo Maria Bonita" class="login-logo">
+        <h1 class="login-title">Recuperar Senha</h1>
+        <p class="login-subtitle">Digite seu e-mail de administrador e enviaremos um link para redefinir sua senha.</p>
+      </div>
+
+      <form id="recuperar-form" class="login-form">
+        <div class="form-group">
+          <label for="email" class="form-label">E-mail</label>
+          <div class="input-container">
+            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <input type="email" id="email" name="email" placeholder="Seu e-mail" required />
+          </div>
+        </div>
+
+        <button type="submit" class="submit-button">
+          <span class="button-text">Enviar link de recuperação</span>
+          <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8.342a2 2 0 0 0-.602-1.43l-4.44-4.342A2 2 0 0 0 13.56 2H6c-1.1 0-2 .9-2 2z"></path>
+            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+          </svg>
+        </button>
+      </form>
+
+      <div style="margin-top: 1rem; text-align: center;">
+        <a href="login.html" style="color: #d81b60; font-weight: bold;">← Voltar para o login</a>
+      </div>
+    </div>
+
+    <div class="decoration">
+      <div class="decoration-circle decoration-circle--1"></div>
+      <div class="decoration-circle decoration-circle--2"></div>
+      <div class="decoration-circle decoration-circle--3"></div>
+    </div>
+  </div>
+</body>
+</html>

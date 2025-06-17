@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria Bonita - Tela de Compras</title>
+    <link rel="shortcut icon" href="../imagens/MariaBonita.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/estilo_compras.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="../../imagens/MariaBonita.png" type="image/png">
+</head>
+<body class="page">
+    <header class="header">
+        <div class="header__container">
+            <div class="header__back" id="backButton">
+                <svg class="header__back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span class="header__back-text">Voltar</span>
+            </div>
+            <div class="header__logo-container">
+                <img class="header__logo" src="../imagens/MariaBonita.png" alt="Logo Maria Bonita">
+            </div>
+        </div>
+    </header>
+    
+    <main class="main">
+        <p id="debug" class="debug"></p>
+        
+        <section class="shop">
+            <div class="shop__header">
+                <div class="shop__welcome">
+                    <h1 class="shop__title">Confira Nossos Produtos</h1>
+                    <p class="shop__greeting">Olá, <span id="user-name">Cliente</span>!</p>
+                </div>
+                <div class="shop__search">
+                    <input type="text" class="shop__search-input" placeholder="Buscar produtos...">
+                    <svg class="shop__search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category__header">
+                    <h2 class="category__title">Comidas</h2>
+                </div>
+                <div id="Comidas-container" class="products products--scroll"></div>
+            </div>
+            
+            <div class="category">
+                <div class="category__header">
+                    <h2 class="category__title">Bebidas</h2>
+                </div>
+                <div id="Bebidas-container" class="products products--scroll"></div>
+            </div>
+            
+            <div class="category">
+                <div class="category__header">
+                    <h2 class="category__title">Doces</h2>
+                </div>
+                <div id="Doces-container" class="products products--scroll"></div>
+            </div>
+            
+            <div class="category">
+                <div class="category__header">
+                    <h2 class="category__title">Combos</h2>
+                </div>
+                <div id="Combos-container" class="products products--scroll"></div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="cart">
+            <div class="cart__summary">
+                <div class="cart__info">
+                    <span class="cart__count">0 itens</span>
+                    <span class="cart__total">Total: R$ 0,00</span>
+                </div>
+                <div class="cart__actions">
+                    <button class="cart__cancel" id="cancelButton">
+                        <svg class="cart__cancel-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                        Cancelar
+                    </button>
+                    <a href="/tela_pagamento" class="cart__checkout-link">
+                        <button class="cart__checkout cart__checkout--disabled" disabled>
+                            <svg class="cart__checkout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 11 12 14 22 4"></polyline>
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                            </svg>
+                            Finalizar
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <p class="footer__copyright">&copy; 2024 Maria Bonita</p>
+    </footer>
+    
+    <div class="popup-overlay" id="cancelPopupOverlay">
+        <div class="popup">
+            <div class="popup-header">
+                <h3>Cancelar Pedido</h3>
+                <button class="popup-close" data-popup="cancelPopupOverlay">&times;</button>
+            </div>
+            <div class="popup-content">
+                <p>Tem certeza que deseja cancelar o pedido?</p>
+                <p class="popup-warning">Todos os itens selecionados serão perdidos.</p>
+                <div class="popup-actions">
+                    <button class="popup-button popup-button--secondary" data-popup="cancelPopupOverlay">Não</button>
+                    <button class="popup-button popup-button--primary" id="confirmCancel">Sim, cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="popup-overlay" id="backPopupOverlay">
+        <div class="popup">
+            <div class="popup-header">
+                <h3>Voltar à Tela Inicial</h3>
+                <button class="popup-close" data-popup="backPopupOverlay">&times;</button>
+            </div>
+            <div class="popup-content">
+                <p>Tem certeza que deseja voltar à tela inicial?</p>
+                <p class="popup-warning">Todo o progresso do seu pedido será perdido.</p>
+                <div class="popup-actions">
+                    <button class="popup-button popup-button--secondary" data-popup="backPopupOverlay">Não</button>
+                    <button class="popup-button popup-button--primary" id="confirmBack">Sim, voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/tratar_produtos.js"></script>
+</body>
+</html>
