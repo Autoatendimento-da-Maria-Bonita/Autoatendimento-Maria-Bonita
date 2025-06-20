@@ -1,339 +1,177 @@
-// Dados de exemplo para produtos (remover ao integrar com backend)
-const mockProducts = [
-    {
-      id: 1,
-      name: "Hambúrguer Clássico",
-      category: "Comidas",
-      price: 18.9,
-      stock: 50,
-      image: "imagem",
-    },
-    {
-      id: 2,
-      name: "Batata Frita Grande",
-      category: "Comidas",
-      price: 12.5,
-      stock: 100,
-      image: "imagem",
-    },
-    {
-      id: 3,
-      name: "Refrigerante Cola",
-      category: "Bebidas",
-      price: 6.0,
-      stock: 200,
-      image: "imagem",
-    },
-    {
-      id: 4,
-      name: "Sorvete de Chocolate",
-      category: "Doces",
-      price: 8.5,
-      stock: 30,
-      image: "imagem",
-    },
-    {
-      id: 5,
-      name: "Combo Família",
-      category: "Combos",
-      price: 49.9,
-      stock: 15,
-      image: "imagem",
-    },
-  ]
-  
-  // Variáveis globais
-  let currentProductId = null
-  let isUpdateConfirmationNeeded = true
-  
-  // Inicialização
-  document.addEventListener("DOMContentLoaded", () => {
-    // Configurar event listeners
-    setupEventListeners()
-  
-    // Não precisamos do spinner de carregamento já que os produtos estão carregados estaticamente
-    const loadingSpinner = document.getElementById("loading-spinner")
-    if (loadingSpinner) {
-      loadingSpinner.style.display = "none"
-    }
-  })
-  
-  // Configurar event listeners
-  function setupEventListeners() {
-    // Botão para adicionar produto - Agora é um link para produtos_service.html
-    // Não precisamos adicionar event listener aqui, pois é um link <a>
-  
-    // Botões de editar produto
-    document.querySelectorAll(".product-item__edit-btn").forEach((button) => {
-      button.addEventListener("click", () => {
-        const productId = button.getAttribute("data-id")
-        const productName = button.getAttribute("data-name")
-        openEditProductModal(productId, productName)
-      })
-    })
-  
-    // Botões de excluir produto
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://tvnuasxggudcegiclpzp.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2bnVhc3hnZ3VkY2VnaWNscHpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM4ODYwNjgsImV4cCI6MjA1OTQ2MjA2OH0.0irQipVPIzSnsarcw6MJnmTcwKqnfuG_KkmHimV0poY"
+);
+
+let currentProductId = null;
+let isUpdateConfirmationNeeded = true;
+
+async function fetchProducts() {
+  const { data, error } = await supabase.from("produtos").select("*");
+  if (error) {
+    console.error("Erro ao buscar produtos:", error);
+    return;
+  }
+  renderProducts(data);
+}
+
+function renderProducts(products) {
+  const list = document.getElementById("products-list");
+  list.innerHTML = "";
+  products.forEach((product) => {
+    const div = document.createElement("div");
+    div.className = "product-item";
+    div.innerHTML = `
+      <div class="product-item__image-container">
+        <img src="${product.imagem_url}" alt="${product.nome}" class="product-item__image">
+      </div>
+      <div class="product-item__name">${product.nome}</div>
+      <div class="product-item__category">${product.categoria}</div>
+      <div class="product-item__price">R$ ${parseFloat(product.preco).toFixed(2).replace(".", ",")}</div>
+      <div class="product-item__stock">${product.Quantidade_em_estoque} un.</div>
+      <div class="product-item__actions">
+        <button class="product-item__edit-btn" data-id="${product.id}" data-name="${product.nome}">Editar</button>
+        <button class="product-item__delete-btn" data-id="${product.id}" data-name="${product.nome}">Deletar</button>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+  setupEventListeners();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetchProducts();
+  document.getElementById("product-form").addEventListener("submit", handleProductFormSubmit);
+  document.getElementById("confirm-delete").addEventListener("click", handleDeleteProduct);
+  document.getElementById("confirm-update").addEventListener("click", handleConfirmUpdate);
+});
+function openEditProductModal(productId, productName) {
+  supabase.from("produtos").select("*").eq("id", productId).single().then(({ data: product }) => {
+    if (!product) return;
+    document.getElementById("product-id").value = product.id;
+    document.getElementById("product-name").value = product.nome;
+    document.getElementById("product-category").value = product.categoria;
+    document.getElementById("product-price").value = product.preco;
+    document.getElementById("product-stock").value = product.Quantidade_em_estoque;
+    document.getElementById("product-image").value = product.imagem_url;
+    updateImagePreview();
+    document.getElementById("modal-title").textContent = `Editar Produto: ${productName}`;
+    currentProductId = product.id;
+    isUpdateConfirmationNeeded = true;
+    document.getElementById("product-modal").classList.add("active");
+  });
+}
+
+function handleProductFormSubmit(event) {
+  event.preventDefault();
+  const id = document.getElementById("product-id").value;
+  const nome = document.getElementById("product-name").value;
+  const categoria = document.getElementById("product-category").value;
+  const preco = parseFloat(document.getElementById("product-price").value);
+  const estoque = parseInt(document.getElementById("product-stock").value);
+  const imagem = document.getElementById("product-image").value;
+
+  if (id && isUpdateConfirmationNeeded) {
+    openUpdateConfirmModal({ nome, categoria, preco, estoque });
+    return;
+  }
+
+  supabase.from("produtos").insert([{ nome, categoria, preco, Quantidade_em_estoque: estoque, imagem_url: imagem }])
+    .then(() => {
+      showToast("Produto adicionado com sucesso!");
+      closeProductModal();
+      fetchProducts();
+    });
+}
+
+function handleConfirmUpdate() {
+  const id = document.getElementById("product-id").value;
+  const nome = document.getElementById("product-name").value;
+  const categoria = document.getElementById("product-category").value;
+  const preco = parseFloat(document.getElementById("product-price").value);
+  const estoque = parseInt(document.getElementById("product-stock").value);
+  const imagem = document.getElementById("product-image").value;
+
+  supabase.from("produtos").update({ nome, categoria, preco, Quantidade_em_estoque: estoque, imagem_url: imagem }).eq("id", id)
+    .then(() => {
+      closeConfirmUpdateModal();
+      closeProductModal();
+      showToast("Produto atualizado com sucesso!");
+      fetchProducts();
+    });
+}
+function openDeleteConfirmModal(productId, productName) {
+  currentProductId = productId;
+  document.getElementById("confirm-delete-message").textContent = `Deseja excluir o produto "${productName}"?`;
+  document.getElementById("confirm-delete-modal").classList.add("active");
+}
+
+function handleDeleteProduct() {
+  supabase.from("produtos").delete().eq("id", currentProductId)
+    .then(() => {
+      closeConfirmDeleteModal();
+      showToast("Produto deletado com sucesso!");
+      fetchProducts();
+    });
+}
+
+function closeProductModal() {
+  document.getElementById("product-modal").classList.remove("active");
+}
+
+function closeConfirmDeleteModal() {
+  document.getElementById("confirm-delete-modal").classList.remove("active");
+}
+
+function closeConfirmUpdateModal() {
+  document.getElementById("confirm-update-modal").classList.remove("active");
+}
+
+function updateImagePreview() {
+  const url = document.getElementById("product-image").value;
+  const img = document.getElementById("preview-image");
+  const placeholder = document.querySelector(".image-preview__placeholder");
+  if (url) {
+    img.src = url;
+    img.style.display = "block";
+    placeholder.style.display = "none";
+  } else {
+    img.style.display = "none";
+    placeholder.style.display = "flex";
+  }
+}
+
+function openUpdateConfirmModal(prod) {
+  document.getElementById("summary-name").textContent = prod.nome;
+  document.getElementById("summary-category").textContent = prod.categoria;
+  document.getElementById("summary-price").textContent = `R$ ${prod.preco.toFixed(2).replace(".", ",")}`;
+  document.getElementById("summary-stock").textContent = `${prod.estoque} un.`;
+  document.getElementById("confirm-update-modal").classList.add("active");
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  const msg = document.getElementById("toast-message");
+  msg.textContent = message;
+  toast.className = "toast show";
+  setTimeout(() => toast.classList.remove("show"), 5000);
+}
+function setupEventListeners() {
+  document.querySelectorAll(".product-item__edit-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      const productId = button.getAttribute("data-id");
+      const productName = button.getAttribute("data-name");
+      openEditProductModal(productId, productName);
+    });
+  });
+
     document.querySelectorAll(".product-item__delete-btn").forEach((button) => {
       button.addEventListener("click", () => {
-        const productId = button.getAttribute("data-id")
-        const productName = button.getAttribute("data-name")
-        openDeleteConfirmModal(productId, productName)
-      })
-    })
-  
-    // Modal de produto
-    document.getElementById("close-modal").addEventListener("click", closeProductModal)
-    document.getElementById("cancel-button").addEventListener("click", closeProductModal)
-    document.getElementById("product-form").addEventListener("submit", handleProductFormSubmit)
-  
-    // Preview de imagem
-    document.getElementById("product-image").addEventListener("input", updateImagePreview)
-  
-    // Modal de confirmação de exclusão
-    document.getElementById("close-confirm-delete-modal").addEventListener("click", closeConfirmDeleteModal)
-    document.getElementById("cancel-delete").addEventListener("click", closeConfirmDeleteModal)
-    document.getElementById("confirm-delete").addEventListener("click", handleDeleteProduct)
-  
-    // Modal de confirmação de atualização
-    document.getElementById("close-confirm-update-modal").addEventListener("click", closeConfirmUpdateModal)
-    document.getElementById("cancel-update").addEventListener("click", closeConfirmUpdateModal)
-    document.getElementById("confirm-update").addEventListener("click", handleConfirmUpdate)
-  
-    // Toast
-    document.getElementById("toast-close").addEventListener("click", hideToast)
-  
-    // Filtros
-    document.getElementById("search-input").addEventListener("input", handleSearch)
-    document.getElementById("category-filter").addEventListener("change", handleCategoryFilter)
-    document.getElementById("sort-filter").addEventListener("change", handleSort)
-    document.getElementById("clear-filters").addEventListener("click", clearFilters)
-  
-    // Paginação
-    document.getElementById("prev-page").addEventListener("click", () => changePage(-1))
-    document.getElementById("next-page").addEventListener("click", () => changePage(1))
-  }
-  
-  // Abrir modal para editar produto
-  function openEditProductModal(productId, productName) {
-    // REMOVER ESTE BLOCO AO INTEGRAR COM BACKEND
-    // Buscar produto pelo ID nos dados de exemplo
-    const product = mockProducts.find((p) => p.id == productId)
-    if (!product) return
-  
-    const modal = document.getElementById("product-modal")
-    const modalTitle = document.getElementById("modal-title")
-    const form = document.getElementById("product-form")
-  
-    // Preencher o formulário
-    document.getElementById("product-id").value = product.id
-    document.getElementById("product-name").value = product.name
-    document.getElementById("product-category").value = product.category
-    document.getElementById("product-price").value = product.price
-    document.getElementById("product-stock").value = product.stock
-    document.getElementById("product-image").value = product.image
-  
-    // Atualizar preview da imagem
-    updateImagePreview()
-  
-    // Configurar o modal
-    modalTitle.textContent = `Editar Produto: ${productName}`
-    currentProductId = product.id
-    isUpdateConfirmationNeeded = true
-  
-    // Mostrar o modal
-    modal.classList.add("active")
-  }
-  
-  // Fechar modal de produto
-  function closeProductModal() {
-    const modal = document.getElementById("product-modal")
-    modal.classList.remove("active")
-  }
-  
-  // Atualizar preview da imagem
-  function updateImagePreview() {
-    const imageUrl = document.getElementById("product-image").value
-    const previewImage = document.getElementById("preview-image")
-    const placeholder = document.querySelector(".image-preview__placeholder")
-  
-    if (imageUrl) {
-      previewImage.src = imageUrl
-      previewImage.style.display = "block"
-      placeholder.style.display = "none"
-    } else {
-      previewImage.style.display = "none"
-      placeholder.style.display = "flex"
-    }
-  }
-  
-  // Lidar com envio do formulário de produto
-  function handleProductFormSubmit(event) {
-    event.preventDefault()
-  
-    // Obter dados do formulário
-    const productId = document.getElementById("product-id").value
-    const name = document.getElementById("product-name").value
-    const category = document.getElementById("product-category").value
-    const price = Number.parseFloat(document.getElementById("product-price").value)
-    const stock = Number.parseInt(document.getElementById("product-stock").value)
-    const imageUrl = document.getElementById("product-image").value
-  
-    // Se for uma atualização, mostrar o modal de confirmação
-    if (productId && isUpdateConfirmationNeeded) {
-      openUpdateConfirmModal({
-        name,
-        category,
-        price,
-        stock,
-        imageUrl,
-      })
-      return
-    }
-  
-    // REMOVER ESTE BLOCO AO INTEGRAR COM BACKEND
-    // Simular salvamento
-    if (productId) {
-      showToast(`Produto "${name}" atualizado com sucesso!`)
-    } else {
-      showToast(`Produto "${name}" adicionado com sucesso!`)
-    }
-  
-    // Fechar o modal
-    closeProductModal()
-  
-    // REMOVER ESTE BLOCO AO INTEGRAR COM BACKEND
-    // Recarregar a página para simular atualização
-    // Na implementação real, você atualizaria a lista de produtos sem recarregar
-    // setTimeout(() => location.reload(), 1500);
-  }
-  
-  // Abrir modal de confirmação para atualizar produto
-  function openUpdateConfirmModal(productData) {
-    const modal = document.getElementById("confirm-update-modal")
-  
-    // Preencher os dados do resumo
-    document.getElementById("summary-name").textContent = productData.name
-    document.getElementById("summary-category").textContent = productData.category
-    document.getElementById("summary-price").textContent = `R$ ${productData.price.toFixed(2).replace(".", ",")}`
-    document.getElementById("summary-stock").textContent = `${productData.stock} un.`
-  
-    // Mostrar o modal
-    modal.classList.add("active")
-  }
-  
-  // Fechar modal de confirmação de atualização
-  function closeConfirmUpdateModal() {
-    const modal = document.getElementById("confirm-update-modal")
-    modal.classList.remove("active")
-  }
-  
-  // Lidar com confirmação de atualização
-  function handleConfirmUpdate() {
-    // Obter dados do formulário
-    const name = document.getElementById("product-name").value
-  
-    // Fechar os modais
-    closeConfirmUpdateModal()
-    closeProductModal()
-  
-    // Mostrar toast de sucesso
-    showToast(`Produto "${name}" atualizado com sucesso!`)
-  }
-  
-  // Abrir modal de confirmação para excluir produto
-  function openDeleteConfirmModal(productId, productName) {
-    // REMOVER ESTE BLOCO AO INTEGRAR COM BACKEND
-    // Buscar produto pelo ID nos dados de exemplo
-    const product = mockProducts.find((p) => p.id == productId)
-    if (!product) return
-  
-    const modal = document.getElementById("confirm-delete-modal")
-    const confirmMessage = document.getElementById("confirm-delete-message")
-  
-    confirmMessage.textContent = `Tem certeza que deseja excluir o produto "${productName}"? Esta ação não pode ser desfeita.`
-    currentProductId = product.id
-  
-    modal.classList.add("active")
-  }
-  
-  // Fechar modal de confirmação de exclusão
-  function closeConfirmDeleteModal() {
-    const modal = document.getElementById("confirm-delete-modal")
-    modal.classList.remove("active")
-  }
-  
-  // Lidar com exclusão de produto
-  function handleDeleteProduct() {
-    if (!currentProductId) return
-  
-    // REMOVER ESTE BLOCO AO INTEGRAR COM BACKEND
-    // Simular exclusão
-    const product = mockProducts.find((p) => p.id == currentProductId)
-    if (product) {
-      showToast(`Produto "${product.name}" excluído com sucesso!`)
-    }
-  
-    // Fechar o modal
-    closeConfirmDeleteModal()
-  
-    // REMOVER ESTE BLOCO AO INTEGRAR COM BACKEND
-    // Recarregar a página para simular atualização
-    // Na implementação real, você atualizaria a lista de produtos sem recarregar
-    // setTimeout(() => location.reload(), 1500);
-  }
-  
-  // Funções de filtro
-  function handleSearch() {
-    // IMPLEMENTAR AO INTEGRAR COM BACKEND
-    console.log("Função de busca será implementada na integração")
-  }
-  
-  function handleCategoryFilter() {
-    // IMPLEMENTAR AO INTEGRAR COM BACKEND
-    console.log("Função de filtro por categoria será implementada na integração")
-  }
-  
-  function handleSort() {
-    // IMPLEMENTAR AO INTEGRAR COM BACKEND
-    console.log("Função de ordenação será implementada na integração")
-  }
-  
-  function clearFilters() {
-    document.getElementById("search-input").value = ""
-    document.getElementById("category-filter").value = ""
-    document.getElementById("sort-filter").value = "name-asc"
-  
-    // IMPLEMENTAR AO INTEGRAR COM BACKEND
-    console.log("Função de limpar filtros será implementada na integração")
-  }
-  
-  // Funções de paginação
-  function changePage(direction) {
-    // IMPLEMENTAR AO INTEGRAR COM BACKEND
-    console.log(`Função de mudar página (${direction}) será implementada na integração`)
-  }
-  
-  // Mostrar toast
-  function showToast(message, type = "success") {
-    const toast = document.getElementById("toast")
-    const toastMessage = document.getElementById("toast-message")
-  
-    toastMessage.textContent = message
-    toast.className = "toast show"
-  
-    if (type === "error") {
-      toast.classList.add("error")
-    }
-  
-    // Esconder automaticamente após 5 segundos
-    setTimeout(() => {
-      hideToast()
-    }, 5000)
-  }
-  
-  // Esconder toast
-  function hideToast() {
-    const toast = document.getElementById("toast")
-    toast.classList.remove("show")
-    toast.classList.remove("error")
+        const productId = button.getAttribute("data-id");
+        const productName = button.getAttribute("data-name");
+        openDeleteConfirmModal(productId, productName);
+      });
+    });
   }
