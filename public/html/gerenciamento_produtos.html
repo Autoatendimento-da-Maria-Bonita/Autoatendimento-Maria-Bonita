@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD de Produtos - Maria Bonita</title>
-    <link rel="stylesheet" href="../css/estilo_gerenciamento_produtos.css">
+    <link rel="stylesheet" href="/css/gerenciamento_produtos.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -24,7 +24,7 @@
                     <div class="search">
                         <input type="text" id="search-input" class="search__input" placeholder="Buscar produtos...">
                     </div>
-                    <a href="produtos_service" id="add-product-btn" class="btn btn--primary">
+                    <a href="cadastro_produtos" id="add-product-btn" class="btn btn--primary">
                         <span class="btn__icon">+</span>
                         <span class="btn__text">Novo Produto</span>
                     </a>
@@ -39,10 +39,10 @@
                     <label for="category-filter" class="filters__label">Categoria:</label>
                     <select id="category-filter" class="filters__select">
                         <option value="">Todas</option>
-                        <option value="Comidas">Comidas</option>
-                        <option value="Bebidas">Bebidas</option>
-                        <option value="Doces">Doces</option>
-                        <option value="Combos">Combos</option>
+                        <option value="Comida">Comida</option>
+                        <option value="Bebida">Bebida</option>
+                        <option value="Doce">Doce</option>
+                        <option value="Combo">Combo</option>
                     </select>
                 </div>
                 <div class="filters__group">
@@ -93,7 +93,7 @@
         </footer>
     </div>
 
-    <!-- Modal para adicionar/editar produto -->
+    <!-- Modal para editar produto -->
     <div id="product-modal" class="modal">
         <div class="modal__overlay"></div>
         <div class="modal__container">
@@ -113,11 +113,11 @@
                     <div class="form__group">
                         <label for="product-category" class="form__label">Categoria*</label>
                         <select id="product-category" name="product-category" class="form__select" required>
-                            <option value="">Selecione uma categoria</option>
-                            <option value="Comidas">Comidas</option>
-                            <option value="Bebidas">Bebidas</option>
-                            <option value="Doces">Doces</option>
-                            <option value="Combos">Combos</option>
+                            <option value="">Selecione a categoria</option>
+                            <option value="Comida">Comida</option>
+                            <option value="Bebida">Bebida</option>
+                            <option value="Doce">Doce</option>
+                            <option value="Combo">Combo</option>
                         </select>
                     </div>
                     
@@ -133,7 +133,7 @@
                         </div>
                     </div>
                     
-                    <div class="form__group">
+                    <div class="form__group" style="display: none;">
                         <label for="product-image" class="form__label">URL da Imagem</label>
                         <input type="text" id="product-image" name="product-image" class="form__input" placeholder="https://exemplo.com/imagem.jpg">
                     </div>
@@ -201,7 +201,7 @@
                         </div>
                         <div class="product-summary__row">
                             <span class="product-summary__label">Categoria:</span>
-                            <span id="summary-category" class="product-summary__value">Comidas</span>
+                            <span id="summary-category" class="product-summary__value">Comida</span>
                         </div>
                         <div class="product-summary__row">
                             <span class="product-summary__label">Preço:</span>
@@ -230,6 +230,6 @@
         </div>
     </div>
 
-    <script type="module" src="../js/gerenciamento_produtos.js"></script>
+    <script type="module" src="/js/gerenciamento_produtos.js"></script>
 </body>
 </html>

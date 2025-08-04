@@ -1,22 +1,9 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-// Inicializa o Supabase
-const supabase = createClient(
-	"https://tvnuasxggudcegiclpzp.supabase.co",
-	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2bnVhc3hnZ3VkY2VnaWNscHpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM4ODYwNjgsImV4cCI6MjA1OTQ2MjA2OH0.0irQipVPIzSnsarcw6MJnmTcwKqnfuG_KkmHimV0poY",
-	{
-		auth: {
-			persistSession: true,
-		},
-	},
-)
-
 document.addEventListener("DOMContentLoaded", () => {
 	const accessSpan = document.querySelector(".header-back")
 	const nameInput = document.getElementById("name")
 	const continueLink = document.getElementById("continueLink")
 	const nameForm = document.getElementById("nameForm")
-	const savedName = sessionStorage.getItem("userName") || localStorage.getItem("userName")
+	const savedName = sessionStorage.getItem("cliente") || localStorage.getItem("cliente")
 
 	if (savedName) {
 		nameInput.value = savedName
@@ -30,8 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			document.querySelector(".form__error").style.display = "block"
 			nameInput.focus()
 		} else {
-			sessionStorage.setItem("userName", name)
-			localStorage.setItem("userName", name)
+			sessionStorage.setItem("cliente", name)
+			localStorage.setItem("cliente", name)
 		}
 	})
 
@@ -48,8 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			nameInput.classList.add("form__input--error")
 			document.querySelector(".form__error").style.display = "block"
 		} else {
-			sessionStorage.setItem("userName", nameInput.value.trim())
-			localStorage.setItem("userName", nameInput.value.trim())
+			sessionStorage.setItem("cliente", nameInput.value.trim())
+			localStorage.setItem("cliente", nameInput.value.trim())
 			window.location.href = "/tela_compras"
 		}
 	})
@@ -128,19 +115,27 @@ document.addEventListener("DOMContentLoaded", () => {
 			return
 		}
 
-		const email = localStorage.getItem("email") || localStorage.getItem("email")
-		if (!email) {
-			showCustomAlert("Erro: e-mail do usuário não encontrado.")
+		const username = localStorage.getItem("username")
+		if (!username) {
+			showCustomAlert("Erro: nome de usuário não encontrado.")
 			return
 		}
 
 		try {
-			const { data, error } = await supabase.auth.signInWithPassword({
-				email: email,
-				password: password,
+			const response = await fetch("/user/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					username: username,
+					password: password,
+				}),
 			})
 
-			if (error) {
+			const result = await response.json()
+
+			if (!response.ok || !result.success) {
 				showCustomAlert("Senha incorreta. Por favor, tente novamente.")
 				return
 			}

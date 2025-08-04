@@ -5,23 +5,31 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Maria Bonita - Tela de Pagamento</title>
-	<link rel="shortcut icon" href="../imagens/MariaBonita.png" type="image/x-icon">
-	<link rel="stylesheet" href="../css/estilo_pagamento.css">
-	<link rel="icon" href="../../imagens/MariaBonita.png" type="image/png">
+	<link rel="shortcut icon" href="/imagens/MariaBonita.png" type="image/x-icon">
+	<link rel="stylesheet" href="/css/estilo_pagamento.css">
+	<link rel="icon" href="/imagens/MariaBonita.png" type="image/png">
 	<link
 		href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap"
 		rel="stylesheet">
 </head>
 
 <body>
-	<div id="avaliacao-popup" class="popup hidden">
-		<div class="popup-content">
-			<h2>O que achou do atendimento?</h2>
-			<p>De 0 a 5 estrelas:</p>
-			<div class="stars" id="stars-container">
-				<!-- estrelas criadas dinamicamente via JS -->
+	<div class="popup-overlay hidden" id="avaliacao-popup">
+		<div class="popup">
+			<div class="popup-header">
+				<h3>Avalie nosso atendimento</h3>
+				<button class="popup-close" data-popup="avaliacao-popup">&times;</button>
 			</div>
-			<button id="enviar-avaliacao">Enviar</button>
+			<div class="popup-content">
+				<p>O que achou do atendimento?</p>
+				<p>De 0 a 5 estrelas:</p>
+				<div class="stars" id="stars-container">
+					<!-- estrelas criadas dinamicamente via JS -->
+				</div>
+				<div class="popup-actions">
+					<button class="popup-button popup-button--primary" id="enviar-avaliacao">Enviar</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -36,7 +44,7 @@
 				<span class="header__back-text">Voltar</span>
 			</div>
 			<div class="header__logo-container">
-				<img class="header__logo" src="../imagens/MariaBonita.png" alt="Logo Maria Bonita">
+				<img class="header__logo" src="/imagens/MariaBonita.png" alt="Logo Maria Bonita">
 			</div>
 		</div>
 	</header>
@@ -68,9 +76,9 @@
 				<p>Este sistema aceita os seguintes métodos de pagamento*:</p>
 			</div>
 			<div class="payment__icons">
-				<img src="../imagens/Pix.png" alt="Pix">
-				<img src="../imagens/cartoes.png" alt="Cartão">
-				<img src="../imagens/dinheiro.png" alt="Dinheiro">
+				<img src="/imagens/Pix.png" alt="Pix">
+				<img src="/imagens/cartoes.png" alt="Cartão">
+				<img src="/imagens/dinheiro.png" alt="Dinheiro">
 				<div class="payment__observations">
 					<p>* Aceitamos apenas cartão de débito.</p>
 					<p>* Ao clicar no método, você será redirecionado para outra página.</p>
@@ -111,8 +119,29 @@
 		<p class="footer__copyright">&copy; 2025 Maria Bonita</p>
 	</footer>
 
+
+
+
+	<div class="popup-overlay hidden" id="cancel-confirmation">
+		<div class="popup">
+			<div class="popup-header">
+				<h3>Cancelar Pedido</h3>
+				<button class="popup-close" data-popup="cancel-confirmation">&times;</button>
+			</div>
+			<div class="popup-content">
+				<p>Tem certeza que deseja cancelar o pedido?</p>
+				<p class="popup-warning">Todos os produtos selecionados serão descartados.</p>
+				<div class="popup-actions">
+					<button class="popup-button popup-button--secondary" id="cancel-cancel">Não</button>
+					<button class="popup-button popup-button--primary" id="confirm-cancel">Sim, cancelar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<script src="https://sdk.mercadopago.com/js/v2"></script>
-	<script src="../js/script_pagamento.js"></script>
+	<script src="/js/script_pagamento.js"></script>
 </body>
 
 </html>

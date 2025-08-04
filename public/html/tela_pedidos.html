@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos - Maria Bonita</title>
+    <link rel="stylesheet" href="/css/tela_pedidos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Cabeçalho -->
+        <header class="header">
+            <div class="header__container">
+                <div class="header__logo-container">
+                    <img src="imagens/MariaBonita.png" alt="Logo Maria Bonita" class="header__logo">
+                    <h1 class="header__title">Lista de Pedidos</h1>
+                </div>
+                <div class="header__actions">
+                    <a href="index" class="btn btn--secondary btn--back">
+                        <span class="btn__icon">←</span>
+                        <span class="btn__text">Voltar</span>
+                    </a>
+                    <div class="search">
+                        <input type="text" id="search-input" class="search__input" placeholder="Buscar por cliente ou pedido...">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Conteúdo principal -->
+        <main class="main">
+            <div class="products">
+                <div class="products__header">
+                    <div class="products__column">Cliente</div>
+                    <div class="products__column">Produtos</div>
+                    <div class="products__column">Valor</div>
+                    <div class="products__column">Está pago?</div>
+                    <div class="products__column">Ações</div>
+                </div>
+                
+                <div id="products-list" class="products__list">
+                    <!-- Linhas de pedidos inseridas via JS -->
+                </div>
+            </div>
+
+            <div class="pagination">
+                <button id="prev-page" class="pagination__button pagination__button--prev" disabled>
+                    <span class="pagination__icon">←</span>
+                    <span class="pagination__text">Anterior</span>
+                </button>
+                <div id="pagination-info" class="pagination__info">Página 1 de 1</div>
+                <button id="next-page" class="pagination__button pagination__button--next" disabled>
+                    <span class="pagination__text">Próxima</span>
+                    <span class="pagination__icon">→</span>
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="footer__text">&copy; 2024 Maria Bonita</p>
+        </footer>
+    </div>
+    <script src="/js/tela_pedidos.js"></script>
+</body>
+</html>

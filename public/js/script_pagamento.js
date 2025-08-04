@@ -61,7 +61,7 @@ async function processarPagamento(cart) {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/pagamento/criar-preferencia', {
+        const response = await fetch('/pagamento/criar-preferencia', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -96,6 +96,14 @@ function mostrarPopupAvaliacao() {
     const popup = document.getElementById("avaliacao-popup");
     popup.classList.remove("hidden");
 
+    // Botão para fechar o popup (X)
+    const closeButton = popup.querySelector('.popup-close');
+    if (closeButton) {
+        closeButton.onclick = () => {
+            popup.classList.add("hidden");
+        };
+    }
+
     const starsContainer = document.getElementById("stars-container");
     starsContainer.innerHTML = "";
 
@@ -116,6 +124,13 @@ function mostrarPopupAvaliacao() {
 
         // Aqui você poderia enviar os dados ao backend
     });
+
+    // Fechar popup clicando fora dele
+    popup.onclick = (e) => {
+        if (e.target === popup) {
+            popup.classList.add("hidden");
+        }
+    };
 }
 
 function selecionarEstrelas(n) {
@@ -130,6 +145,33 @@ function selecionarEstrelas(n) {
 }
 
 function cancelarPedido() {
-    sessionStorage.removeItem('cart');
-    window.location.href = './tela_inicial';
+	const popup = document.getElementById('cancel-confirmation');
+	popup.classList.remove('hidden');
+
+	// Botão para fechar o popup (X)
+	const closeButton = popup.querySelector('.popup-close');
+	if (closeButton) {
+		closeButton.onclick = () => {
+			popup.classList.add('hidden');
+		};
+	}
+
+	// Botão "Sim, cancelar"
+	document.getElementById('confirm-cancel').onclick = () => {
+		sessionStorage.clear();
+		window.location.href = './tela_inicial';
+	};
+
+	// Botão "Não"
+	document.getElementById('cancel-cancel').onclick = () => {
+		popup.classList.add('hidden');
+	};
+
+	// Fechar popup clicando fora dele
+	popup.onclick = (e) => {
+		if (e.target === popup) {
+			popup.classList.add('hidden');
+		}
+	};
 }
+

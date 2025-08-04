@@ -1,8 +1,8 @@
-window.onload = function() {
-    loadProducts('Comidas');
-    loadProducts('Bebidas');
-    loadProducts('Doces');
-    loadProducts('Combos');
+window.onload = function () {
+    loadProducts('Comida');
+    loadProducts('Bebida');
+    loadProducts('Doce');
+    loadProducts('Combo');
     updateFinalizeButton();
     updateTotal();
     displayUserName();
@@ -10,23 +10,19 @@ window.onload = function() {
 };
 
 function displayUserName() {
-    const userName = sessionStorage.getItem('userName') || localStorage.getItem('userName');
-    if (userName) {
-        document.getElementById('user-name').textContent = userName;
+    const cliente = sessionStorage.getItem('cliente') || localStorage.getItem('cliente');
+    if (cliente) {
+        document.getElementById('user-name').textContent = cliente;
     }
 }
 
 function setupPopups() {
-    document.getElementById('cancelButton').addEventListener('click', function() {
+    document.getElementById('cancelButton').addEventListener('click', function () {
         const cart = JSON.parse(sessionStorage.getItem('cart')) || {};
-        if (Object.keys(cart).length > 0) {
-            showPopup('cancelPopupOverlay');
-        } else {
-            return;
-        }
+        showPopup('cancelPopupOverlay');
     });
-    
-    document.getElementById('backButton').addEventListener('click', function() {
+
+    document.getElementById('backButton').addEventListener('click', function () {
         const cart = JSON.parse(sessionStorage.getItem('cart')) || {};
         if (Object.keys(cart).length > 0) {
             showPopup('backPopupOverlay');
@@ -34,26 +30,26 @@ function setupPopups() {
             window.location.href = '/tela_inicial';
         }
     });
-    
+
     document.querySelectorAll('.popup-close, .popup-button--secondary').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const popupId = this.getAttribute('data-popup');
             hidePopup(popupId);
         });
     });
 
-    document.getElementById('confirmCancel').addEventListener('click', function() {
+    document.getElementById('confirmCancel').addEventListener('click', function () {
         cancelarPedido();
         hidePopup('cancelPopupOverlay');
     });
-    
-    document.getElementById('confirmBack').addEventListener('click', function() {
+
+    document.getElementById('confirmBack').addEventListener('click', function () {
         sessionStorage.removeItem('cart');
         window.location.href = '/tela_inicial';
     });
-    
+
     document.querySelectorAll('.popup-overlay').forEach(overlay => {
-        overlay.addEventListener('click', function(e) {
+        overlay.addEventListener('click', function (e) {
             if (e.target === this) {
                 hidePopup(this.id);
             }
@@ -73,10 +69,10 @@ function hidePopup(popupId) {
 
 async function loadProducts(type) {
     try {
-        const response = await fetch(`/api/produtos/${type}`);
+        const response = await fetch(`/api/produtos/categoria/${type}`);
         const produtos = await response.json();
 
-        const container = document.getElementById(`${type}-container`);
+        const container = document.getElementById(`${type}s-container`);
         container.innerHTML = '';
 
         produtos.forEach(produto => {
@@ -84,8 +80,8 @@ async function loadProducts(type) {
             productDiv.className = 'product';
             productDiv.setAttribute('data-name', produto.nome);
             productDiv.setAttribute('data-price', produto.preco);
-            productDiv.onclick = function(e) {
-            
+            productDiv.onclick = function (e) {
+
                 if (!e.target.closest('.product__action')) {
                     incrementProduct(this);
                 }
@@ -113,7 +109,7 @@ async function loadProducts(type) {
         });
     } catch (err) {
         console.error('Erro ao carregar produtos:', err);
-        
+
         const container = document.getElementById(`${type}-container`);
         container.innerHTML = `<div class="product__error">Erro ao carregar produtos. Verifique a conexão.</div>`;
     }
@@ -124,7 +120,7 @@ function incrementProduct(product) {
     const quantityContainer = product.querySelector('.product__quantity');
     let count = parseInt(counter.textContent) + 1;
     counter.textContent = count;
-    
+
     if (count > 0) {
         quantityContainer.classList.add('product__quantity--visible');
         product.classList.add('product--selected');
@@ -135,8 +131,8 @@ function incrementProduct(product) {
 
     let cart = JSON.parse(sessionStorage.getItem('cart')) || {};
     if (cart[name]) {
-        cart[name].quantity += 1; 
-    } 
+        cart[name].quantity += 1;
+    }
     else {
         cart[name] = { 'price': price, 'quantity': 1 };
     }
@@ -150,29 +146,29 @@ function decrementProduct(product) {
     const counter = product.querySelector('.product__quantity-count');
     const quantityContainer = product.querySelector('.product__quantity');
     let count = parseInt(counter.textContent);
-    
+
     if (count > 0) {
         count -= 1;
         counter.textContent = count;
-        
+
         const name = product.getAttribute('data-name');
         let cart = JSON.parse(sessionStorage.getItem('cart')) || {};
-        
+
         if (cart[name]) {
             cart[name].quantity -= 1;
-            
+
             if (cart[name].quantity <= 0) {
                 delete cart[name];
             }
-            
+
             sessionStorage.setItem('cart', JSON.stringify(cart));
         }
-        
+
         if (count === 0) {
             quantityContainer.classList.remove('product__quantity--visible');
             product.classList.remove('product--selected');
         }
-        
+
         updateFinalizeButton();
         updateTotal();
     }
@@ -196,19 +192,19 @@ function updateTotal() {
     const cart = JSON.parse(sessionStorage.getItem('cart')) || {};
     let totalItems = 0;
     let totalPrice = 0;
-    
+
     for (const item in cart) {
         totalItems += cart[item].quantity;
         totalPrice += cart[item].quantity * parseFloat(cart[item].price);
     }
-    
+
     document.querySelector('.cart__count').textContent = `${totalItems} ${totalItems === 1 ? 'item' : 'itens'}`;
     document.querySelector('.cart__total').textContent = `Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
 }
 
 function cancelarPedido() {
     sessionStorage.removeItem('cart');
-    
+
     const quantityCounters = document.querySelectorAll('.product__quantity-count');
     quantityCounters.forEach(counter => {
         counter.textContent = '0';
@@ -219,13 +215,16 @@ function cancelarPedido() {
 
     updateFinalizeButton();
     updateTotal();
+    localStorage.removeItem('cliente');
+    sessionStorage.removeItem('cliente');
+    window.location.href = '/tela_inicial';
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('.shop__search-input').addEventListener('input', function(e) {
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('.shop__search-input').addEventListener('input', function (e) {
         const searchTerm = e.target.value.toLowerCase();
         const products = document.querySelectorAll('.product');
-        
+
         products.forEach(product => {
             const productName = product.querySelector('.product__name').textContent.toLowerCase();
             if (productName.includes(searchTerm)) {

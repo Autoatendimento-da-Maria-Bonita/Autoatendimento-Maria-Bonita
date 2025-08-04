@@ -45,6 +45,7 @@ const upload = multer({
 function sanitizeCategoria(str: string): string {
     return str.replace(/[^a-zA-Z0-9_-]/g, "");
 }
+
 uploadRouter.post("/", (req: Request, res: Response) => {
     upload(req, res, function (err) {
         if (err) {
@@ -84,7 +85,7 @@ uploadRouter.post("/", (req: Request, res: Response) => {
 
             fs.renameSync(file.path, finalPath);
 
-            const imageUrl = `/img/${categoria}/${file.filename}`;
+            const imageUrl = `/imagens/${categoria}/${file.filename}`;
             console.log("Success - Image URL:", imageUrl);
 
             res.json({ imageUrl });

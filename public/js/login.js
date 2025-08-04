@@ -1,16 +1,3 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-// Inicializa o Supabase
-const supabase = createClient(
-	"https://tvnuasxggudcegiclpzp.supabase.co",
-	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2bnVhc3hnZ3VkY2VnaWNscHpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM4ODYwNjgsImV4cCI6MjA1OTQ2MjA2OH0.0irQipVPIzSnsarcw6MJnmTcwKqnfuG_KkmHimV0poY",
-	{
-		auth: {
-			persistSession: true,
-		},
-	},
-)
-
 const loginForm = document.getElementById("login-form")
 const recuperarForm = document.getElementById("recuperar-form")
 const loginTab = document.querySelector('[data-tab="login"]')
@@ -20,7 +7,7 @@ const recuperarContent = document.getElementById("recuperar-content")
 const notification = document.getElementById("notification")
 const notificationMessage = document.getElementById("notification-message")
 const togglePasswordButton = document.querySelector(".toggle-password")
-const passwordInput = document.getElementById("senha")
+const passwordInput = document.getElementById("password")
 
 loginTab.addEventListener("click", () => {
 	setActiveTab("login")
@@ -68,56 +55,69 @@ function showNotification(message, type = "error") {
 }
 
 loginForm.addEventListener("submit", async (e) => {
-	e.preventDefault()
+	e.preventDefault();
 
-	const email = loginForm.email.value
-	localStorage.setItem("email", email)
-	const senha = loginForm.senha.value
+	const username = document.getElementById("username").value;
+	const password = document.getElementById("password").value;
 
 	try {
-		const { data, error } = await supabase.auth.signInWithPassword({
-			email: email,
-			password: senha,
-		})
+		const response = await fetch("/user/login", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({ username, password })
+		});
 
-		if (error) throw error
+		const data = await response.json();
 
-		showNotification("Login realizado com sucesso! Redirecionando...", "success")
+		if (response.ok && data.success) {
+			localStorage.setItem("username", username);
+			showNotification("Login realizado com sucesso!", "success");
 
-		setTimeout(() => {
-			window.location.href = "index"
-		}, 1500)
+			// Pequeno delay antes de redirecionar (opcional)
+			setTimeout(() => {
+				window.location.href = "/index";
+			}, 1000);
+		} else {
+			showNotification(data.message || "Falha ao fazer login.");
+		}
 	} catch (error) {
-		showNotification("Erro ao fazer login: ")
-		console.error("Erro de login:")
+		console.error("Erro ao fazer login:", error);
+		showNotification("Erro de conexão com o servidor.");
 	}
-})
+});
+
 
 recuperarForm.addEventListener("submit", async (e) => {
-	e.preventDefault()
+	e.preventDefault();
 
-	const email = recuperarForm["recuperar-email"].value
+	const username = document.getElementById("username").value;
 
 	try {
-		const { error } = await supabase.auth.resetPasswordForEmail(email, {
-			redirectTo: window.location.origin + "/reset-password",
-		})
+		const response = await fetch("/user/recuperar-password", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({ username })
+		});
 
-		if (error) throw error
+		const data = await response.json();
 
-		showNotification("Instruções de recuperação enviadas para seu e-mail!", "success")
-
-		setTimeout(() => {
-			setActiveTab("login")
-		}, 2000)
+		if (response.ok && data.success) {
+			showNotification("username de recuperação enviado com sucesso!", "success");
+		} else {
+			showNotification(data.message || "Falha ao enviar username de recuperação.");
+		}
 	} catch (error) {
-		showNotification("Erro ao solicitar recuperação: ")
-		console.error("Erro de recuperação:")
+		console.error("Erro ao enviar username de recuperação:", error);
+		showNotification("Erro de conexão com o servidor.");
 	}
-})
+});
 
 document.addEventListener("DOMContentLoaded", () => {
 	document.querySelector(".login-container").classList.add("animate")
 
-	document.getElementById("email").focus()
+	document.getElementById("username").focus()
 })
